@@ -1,0 +1,46 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.68)
+AC_INIT([ships], 0.1)
+
+AC_CONFIG_AUX_DIR(conf)
+
+AC_CANONICAL_SYSTEM
+AM_INIT_AUTOMAKE()
+
+AC_PROG_CXX
+
+dnl PKG_CHECK_MODULES([SDL],[sdl])
+dnl AC_SUBST(SDL_CFLAGS)
+dnl AC_SUBST(SDL_LIBS)
+
+AC_CHECK_HEADER([SDL/SDL.h])
+
+
+dnl Check for OpenGL (Original or Mesa) (or osX-framework)
+AC_CHECK_HEADERS([GL/gl.h GL/glu.h],[],
+    [AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h],[],[echo "OpenGL is mandatory";exit 1;])
+    ])
+
+
+
+AC_CHECK_LIB([m],[sin],,)
+
+AC_CHECK_LIB([SDL],[SDL_Init],)
+
+if test `uname -s` != Darwin; then
+AC_CHECK_LIB([GL], [glInitNames],,[
+     AC_CHECK_LIB(MesaGL,glInitNames,,
+            [echo "OpenGL is mandatory";exit 1]])
+)
+
+dnl Check for GLU (Original or Mesa)
+AC_CHECK_LIB(GLU, gluLookAt, ,[
+     AC_CHECK_LIB(MesaGLU,gluLookAt,,
+     [echo "incomplete OpenGL (no GLU)";exit 1])]
+)
+fi
+
+AC_CONFIG_FILES(Makefile src/Makefile)
+AC_OUTPUT
+
