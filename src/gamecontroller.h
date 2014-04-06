@@ -18,13 +18,18 @@ class Controller;
 
 class GameController : public Controller {
 private:
+	double m_rot;
+	double o_rot;
+	int m_width, m_height;
+
+	GLUquadric* obj;
 
 public:
 	GameController();
 	~GameController();
 
 	void Event(SDL_Event& evt);
-	void Loop(double seconds);
+	void Loop(double dt);
 	void Render();
 };
 

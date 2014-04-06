@@ -89,21 +89,31 @@ int ShipsController::Run() {
 			unsigned int ticks;
 			unsigned int ticked;
 
-			ticks = ticked= 0;
+			ticked = SDL_GetTicks();
+			ticks = 0;
 			// GameController loop
 			while (this->m_running) {
 				SDL_PollEvent(&evt);
 
-				ticks = SDL_GetTicks();
-				this->m_view->Render();
-				if (evt.type == SDL_KEYDOWN && evt.key.keysym.sym == 'q')
+				// Catch the quit events and process them before rendering.
+				if (evt.type == SDL_KEYDOWN && evt.key.keysym.sym == 'q') {
 					this->m_running = false;
-				if (evt.type == SDL_QUIT)
+					break;
+				}
+				if (evt.type == SDL_QUIT) {
 					this->m_running = false;
+					break;
+				}
 
-				this->m_active->Event(evt);
-				this->m_active->Loop(0);
-				this->m_active->Render();
+				ticks = SDL_GetTicks();
+
+				// Cap the maximum frame rate at 50 fps (for performance reasons)
+				if (ticks - ticked > 25) {
+					this->m_active->Event(evt);
+					this->m_active->Loop(ticks - ticked);
+					this->m_active->Render();
+					ticked = ticks;
+				}
 			}
 
 			this->m_state = ShipsController::State::None;
@@ -116,11 +126,16 @@ int ShipsController::Run() {
 	}
 
 	// If there is a controller allocated on termination, delete it.
-	if(m_active) delete m_active;
+	if (m_active)
+		delete m_active;
 
 	cout << "Terminate instruction received. Freeing resources!\n";
 	delete ShipsController::_root;
 	ShipsController::_root = 0;
 	return 0;
+}
+
+ShipsView* ShipsController::GetView() {
+	return this->m_view;
 }
 

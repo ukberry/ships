@@ -13,9 +13,9 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-m_surface(0), m_rot(0), o_rot(0), m_screenflags(0), obj(0), m_fullscreen(1) {
-	this->m_fullscreen? this->m_width=1920: this->m_width = 1200;
-	this->m_fullscreen? this->m_height=1080: this->m_height = 900;
+m_surface(0), m_screenflags(0), m_fullscreen(1) {
+	this->m_fullscreen? this->m_width=1600: this->m_width = 800;
+	this->m_fullscreen? this->m_height=900: this->m_height = 600;
 }
 
 ShipsView::~ShipsView() {
@@ -23,7 +23,6 @@ ShipsView::~ShipsView() {
 	if(this->m_surface)
 		SDL_FreeSurface(this->m_surface);
 
-	gluDeleteQuadric(this->obj);
 }
 
 int ShipsView::CreateView() {
@@ -76,109 +75,24 @@ int ShipsView::CreateView() {
 	// Set the window's title.
 	SDL_WM_SetCaption("Ships <alpha>",0);
 
-	this->obj = gluNewQuadric();
+
 
 	// Return OK
 	return 0;
 }
 
+void ShipsView::Loop(double dt) {
+
+}
+
 void ShipsView::Render() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    glLoadIdentity();
 
-	    glPushMatrix();
-	    glBegin(GL_QUADS);
-	        glColor3f(0, 0, 0); glVertex3f(0, 0, 0);
-	        glColor3f(0, 102./255, 0); glVertex3f(m_width, 0, 0);
-	        glColor3f(0, 0, 0); glVertex3f(m_width, m_height, 0);
-	        glColor3f(0, 0, 192./255); glVertex3f(0, m_height, 0);
-	    glEnd();
-	    glPopMatrix();
+}
 
-	    glPushMatrix();
+int ShipsView::GetWidth() {
+	return this->m_width;
+}
 
-	    m_rot += 1.;
-	    o_rot += 4.;
-	    glTranslatef(100.,100.+m_rot,1.);
-	    //glRotatef(m_rot,0,0,1);
-	    glRotatef(sin(o_rot/100)*20,0,1,0);
-	    glLineWidth(1.5f);
-	    glBegin(GL_LINE_LOOP);
-	    	//glTranslatef(-20,-30,0);
-	    	glColor3f(0,1,0);
-	    	glVertex3f(0,40,0);
-	    	glVertex3f(20,-30,0);
-	    	glVertex3f(0,-10,0);
-	    	glVertex3f(-20,-30,0);
-	    glEnd();
-	    glBegin(GL_LINE_STRIP);
-	    	glVertex3f(0,40,0);
-	    	glVertex3f(0,0,10);
-	    	glVertex3f(0,-10,0);
-	    glEnd();
-	    glBegin(GL_LINE_STRIP);
-	    	glVertex3f(20,-30,0);
-	    	glVertex3f(0,0,10);
-	    	glVertex3f(-20,-30,0);
-	    glEnd();
-	    glTranslatef(0,-20,5);
- 	    	    	    	    glColor4f(1,.6,.4,0.3);
- 	    	    	    	    gluSphere(this->obj, 10, 8,8);
- 	    	    	    	   glColor4f(1,.7,.5,0.8);
- 	    	    	    	   gluSphere(this->obj, 5, 8,8);
-	    glPopMatrix();
-	    glPushMatrix();
-	    glTranslatef(300.,100.,1.);
-	    glColor4f(1,0,0,1);
-	    	    glRotatef(m_rot*1.2,0,0,1);
-	    	    glRotatef(o_rot*5,0,1,0);
-	    	    glLineWidth(1.6f);
-	    	    glBegin(GL_LINE_LOOP);
-	    	    	//glTranslatef(-20,-30,0);
-
-	    	    	glVertex3f(0,40,0);
-	    	    	glVertex3f(20,-30,0);
-	    	    	glVertex3f(0,-10,0);
-	    	    	glVertex3f(-20,-30,0);
-	    	    glEnd();
-	    	    glBegin(GL_LINE_STRIP);
-	    	    	glVertex3f(0,40,0);
-	    	    	glVertex3f(0,0,10);
-	    	    	glVertex3f(0,-10,0);
-	    	    glEnd();
-	    	    glBegin(GL_LINE_STRIP);
-	    	    	    	glVertex3f(20,-30,0);
-	    	    	    	glVertex3f(0,0,10);
-	    	    	    	glVertex3f(-20,-30,0);
-	    	    glEnd();
-	    	    glPopMatrix();
-
-	    	    glPushMatrix();
-	    	    	    glTranslatef(500.,100.,1.);
-	    	    	    	    glRotatef(m_rot*1,0,0,-1);
-	    	    	    	    glRotatef(o_rot,0,1,0);
-	    	    	    	    glLineWidth(1.6f);
-	    	    	    	    glColor3f(0,0.1,1.);
-	    	    	    	    glBegin(GL_LINE_LOOP);
-	    	    	    	    	//glTranslatef(-20,-30,0);
-
-	    	    	    	    	glVertex3f(0,40,0);
-	    	    	    	    	glVertex3f(20,-30,0);
-	    	    	    	    	glVertex3f(0,-10,0);
-	    	    	    	    	glVertex3f(-20,-30,0);
-	    	    	    	    glEnd();
-	    	    	    	    glBegin(GL_LINE_STRIP);
-	    	    	    	    	glVertex3f(0,40,0);
-	    	    	    	    	glVertex3f(0,0,10);
-	    	    	    	    	glVertex3f(0,-10,0);
-	    	    	    	    glEnd();
-	    	    	    	    glBegin(GL_LINE_STRIP);
-	    	    	    	    	    	glVertex3f(20,-30,0);
-	    	    	    	    	    	glVertex3f(0,0,10);
-	    	    	    	    	    	glVertex3f(-20,-30,0);
-	    	    	    	    glEnd();
-
-	    	    	   glPopMatrix();
-
-	    SDL_GL_SwapBuffers();
+int ShipsView::GetHeight() {
+	return this->m_height;
 }

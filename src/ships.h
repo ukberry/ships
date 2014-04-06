@@ -40,6 +40,8 @@ public:
 
 	int Init();
 	int Run();
+
+	ShipsView* GetView();
 };
 
 /**
@@ -96,15 +98,17 @@ private:
 	bool m_fullscreen;
 	int m_width;
 	int m_height;
-	double m_rot;
-	double o_rot;
-	GLUquadric* obj;
+
 public:
 	ShipsView();
 	~ShipsView();
 
 	int CreateView();
 	void Render();
+	void Loop(double);
+
+	int GetWidth();
+	int GetHeight();
 };
 
 
