@@ -52,6 +52,17 @@ void ShipView::Render(Ship* ship) {
 		gluSphere(this->m_sphere, 10, 8, 8);
 		glColor4f(1, .7, .5, 0.8);
 		gluSphere(this->m_sphere, 5, 8, 8);
+
+		glTranslatef(-10, -10, 0);
+				glColor4f(1, .6, .4, 0.3);
+				gluSphere(this->m_sphere, 10, 8, 8);
+				glColor4f(1, .7, .5, 0.8);
+				gluSphere(this->m_sphere, 5, 8, 8);
+				glTranslatef(20, 0, 0);
+						glColor4f(1, .6, .4, 0.3);
+						gluSphere(this->m_sphere, 10, 8, 8);
+						glColor4f(1, .7, .5, 0.8);
+						gluSphere(this->m_sphere, 5, 8, 8);
 	}
 	glPopMatrix();
 }
@@ -65,23 +76,64 @@ Ship::Ship(double x, double y) {
 	this->m_vx = 0;
 	this->m_vy = 0;
 
-	this->m_maxrot = 5;
+	this->m_maxrot = 2;
 	this->m_rot = 0;
 	this->m_vr = 0;
 
-	this->m_maxthrust = 10;
+	this->m_maxthrust = 30;
 	this->m_thrust = 0;
+
+	this->m_stoppower =10;
+	this->m_stop = 0;
+
+	this->m_physics = 0;
 }
 
 void Ship::Loop(double dt) {
 	this->m_time += dt;
 	this->m_rot += this->m_vr*dt;
 
-	this->m_vx += -this->m_thrust*sin(this->m_rot)*dt;
-	this->m_vy += this->m_thrust*cos(this->m_rot)*dt;
+	if(this->m_physics == 1) {
+		double v 	 = sqrt(pow(m_vx,2)+pow(m_vy,2));
+
+		this->m_vx = -v*sin(this->m_rot);
+		this->m_vy = v*cos(this->m_rot);
+	}
+
+	if(this->m_stop) {
+		double theta = atan2(this->m_vx,this->m_vy);
+		isnan(theta) ? theta = 0 : 0;
+
+		fabs(m_vx) < 1e-2 ? m_vx = 0 :
+		this->m_vx += -this->m_stop/1e5 *this->m_maxthrust*sin(theta)*dt;
+
+		fabs(m_vy) < 1e-2 ? m_vy = 0 :
+		this->m_vy += -this->m_stop/1e5  *this->m_maxthrust*cos(theta)*dt;
+	}
+	else {
+		this->m_vx += -this->m_thrust*sin(this->m_rot)*dt;
+		this->m_vy += this->m_thrust*cos(this->m_rot)*dt;
+	}
 
 	this->m_x += this->m_vx*dt;
 	this->m_y += this->m_vy*dt;
 
 
+}
+
+void Ship::setThrust(int i) {
+	this->m_thrust = i / 1e7 * this->m_maxthrust;
+}
+
+void Ship::setRotate(int i) {
+	this->m_vr = i / 1e5 * this->m_maxrot;
+}
+
+void Ship::setStop(int i) {
+	this->m_stop = this->m_stoppower * i/1000;
+}
+
+void Ship::setPhysics(int i) {
+	std::cout << "Physics set to " << i << "\n";
+	this->m_physics = i;
 }

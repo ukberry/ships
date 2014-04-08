@@ -7,10 +7,13 @@ GameController::GameController() :
 	ShipsView *view = ShipsController::GetInstance()->GetView();
 	this->m_height = view->GetHeight();
 	this->m_width = view->GetWidth();
+
 	std::cout << "Game Controller Created!\n";
 
+	/** This view renders each ship in the scene. */
 	this->v_ship = new ShipView();
 
+	/* Add a new ship to the scene (our player ship) */
 	this->m_ships.push_back(new Ship(100, 100));
 	std::cout << "Player ship created\n";
 }
@@ -30,20 +33,24 @@ GameController::~GameController() {
 
 void GameController::Loop(double dt) {
 
+	// Get the key states (event handling not that reliable for multi-key presses).
 	Uint8* keys = SDL_GetKeyState(NULL);
 
-	keys[SDLK_SPACE] ? this->m_ships[0]->m_thrust = this->m_ships[0]->m_maxthrust / 1e5 :
-			this->m_ships[0]->m_thrust = 0;
+	Ship* ship = this->m_ships[0];
 
-	keys[SDLK_RIGHT] || keys[SDLK_LEFT] ?
-			this->m_ships[0]->m_vr = (keys[SDLK_LEFT]? this->m_ships[0]->m_maxrot / 1000 : -this->m_ships[0]->m_maxrot / 1000) :
-			this->m_ships[0]->m_vr = 0;
+	// If space bar pressed, set thrust to 100 percent, else set thrust to 0.
+	keys[SDLK_SPACE] ? ship->setThrust(100) : ship->setThrust(0);
 
+	// If arrow keys pressed, rotate in desired direction.
+	(keys[SDLK_RIGHT] || keys[SDLK_LEFT]) ?
+			ship->setRotate(keys[SDLK_LEFT]?100 :-100) : ship->setRotate(0);
 
+	keys[SDLK_s] && !keys[SDLK_SPACE] ? ship->setStop(100) : ship->setStop(0);
 
 	m_rot += 0.07 * dt;
 	o_rot += 0.2 * dt;
 
+	// For each ship, execute the loop function to step through time.
 	std::vector<Ship*>::size_type len = this->m_ships.size();
 	for (int i = 0; i < len; i++) {
 		this->m_ships[i]->Loop(dt);
@@ -54,19 +61,13 @@ void GameController::Loop(double dt) {
 void GameController::Event(SDL_Event& evt) {
 
 	// Catch the quit events and process them before rendering.
-//	if (evt.type == SDL_KEYDOWN) {
-//		SDLKey key = evt.key.keysym.sym;
-//		evt.key.state
-//		if (key == SDLK_LEFT)
-//			this->m_ships[0]->m_vr = this->m_ships[0]->m_maxrot / 1000;
-//
-//		if (key == SDLK_RIGHT)
-//			this->m_ships[0]->m_vr = -this->m_ships[0]->m_maxrot / 1000;
-//
-//		if (key == SDLK_SPACE)
-//			this->m_ships[0]->m_thrust = ;
-//
-//	}
+	if (evt.type == SDL_KEYDOWN) {
+		SDLKey key = evt.key.keysym.sym;
+		if (key == SDLK_g)
+			this->m_ships[0]->setPhysics(1); // 1 is grip!
+		if (key == SDLK_f)
+			this->m_ships[0]->setPhysics(0); // 0 is free!
+	}
 //	if (evt.type == SDL_KEYUP) {
 //		SDLKey key = evt.key.keysym.sym;
 //		if (key == SDLK_LEFT || key == SDLK_RIGHT)

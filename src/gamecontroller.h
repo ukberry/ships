@@ -12,10 +12,12 @@
 
 #include <math.h>
 
-class Controller;
+//class Controller;
+class ShipView;
 
 class Ship {
-public:
+	friend class ShipView;
+private:
 	double m_x;
 	double m_y;
 	double m_vx;
@@ -29,10 +31,19 @@ public:
 	double m_maxthrust;
 	double m_maxrot;
 
+	double m_stop;
+	double m_stoppower;
+
 	double m_time;
+	int m_physics;
 public:
 	Ship(double x, double y);
 	void Loop(double);
+
+	void setThrust(int i);
+	void setRotate(int i);
+	void setStop(int i);
+	void setPhysics(int i);
 };
 
 class ShipView {
