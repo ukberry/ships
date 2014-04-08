@@ -13,7 +13,7 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-m_surface(0), m_screenflags(0), m_fullscreen(0) {
+m_surface(0), m_screenflags(0), m_fullscreen(1) {
 	this->m_fullscreen? this->m_width=1600: this->m_width = 800;
 	this->m_fullscreen? this->m_height=900: this->m_height = 600;
 }
@@ -46,7 +46,8 @@ int ShipsView::CreateView() {
 
 	SDL_ShowCursor(0);
 
-	glClearColor(192.0f/255.0f, 0, 0, 1.0f);
+	//glClearColor(192.0f/255.0f, 0, 0, 1.0f);
+	glClearColor(0.f/255.0f, 0, 0, 1.0f);
 	glClearDepth(1.0f);
 
 	// Viewport set
@@ -55,9 +56,10 @@ int ShipsView::CreateView() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(0, m_width, 0, m_height , 100, -100);
+	glOrtho(0, m_width, 0, m_height , 1000, -1000);
 
 	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_PROJECTION);
 
 	glShadeModel(GL_SMOOTH);
 

@@ -20,6 +20,7 @@ class Ship {
 private:
 	double m_x;
 	double m_y;
+	double m_z;
 	double m_vx;
 	double m_vy;
 
@@ -29,21 +30,26 @@ private:
 	double m_thrust;
 
 	double m_maxthrust;
+	double m_vtol;
+	double m_vz;
 	double m_maxrot;
 
 	double m_stop;
 	double m_stoppower;
 
 	double m_time;
+	double m_phystime;
 	int m_physics;
 public:
 	Ship(double x, double y);
 	void Loop(double);
 
+	void setVz(int i);
 	void setThrust(int i);
 	void setRotate(int i);
 	void setStop(int i);
 	void setPhysics(int i);
+	void resetPosition();
 };
 
 class ShipView {
