@@ -60,37 +60,6 @@ public:
 
 };
 
-/**
- * Base class for for something that can be rendered by the program, this is the
- * abstracted view part of the object.
- *
- * @version 1.0
- * @author Sam Berry
- */
-class Renderable {
-public:
-	Renderable();
-	virtual ~Renderable();
-	virtual int Render();
-};
-
-class Ship : public Renderable {
-public:
-	double m_x;
-	double m_y;
-	double m_vx;
-	double m_vy;
-
-public:
-	Ship(double x, double y);
-	int Render();
-	void Tick();
-};
-
-
-
-class GLUquadric;
-
 class ShipsView {
 private:
 	SDL_Surface *m_surface;

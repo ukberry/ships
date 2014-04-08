@@ -108,7 +108,7 @@ int ShipsController::Run() {
 				ticks = SDL_GetTicks();
 
 				// Cap the maximum frame rate at 50 fps (for performance reasons)
-				if (ticks - ticked > 25) {
+				if (ticks - ticked > 40) {
 					this->m_active->Event(evt);
 					this->m_active->Loop(ticks - ticked);
 					this->m_active->Render();

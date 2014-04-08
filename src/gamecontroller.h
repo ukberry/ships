@@ -1,4 +1,3 @@
-
 #ifndef GAMECONTROLLER_H_
 #define GAMECONTROLLER_H_
 
@@ -9,27 +8,61 @@
 #include <glm/glm.hpp>
 
 #include <iostream>
-#include <list>
+#include <vector>
 
 #include <math.h>
 
-
 class Controller;
 
-class GameController : public Controller {
+class Ship {
+public:
+	double m_x;
+	double m_y;
+	double m_vx;
+	double m_vy;
+
+	double m_rot;
+	double m_vr;
+
+	double m_thrust;
+
+	double m_maxthrust;
+	double m_maxrot;
+
+	double m_time;
+public:
+	Ship(double x, double y);
+	void Loop(double);
+};
+
+class ShipView {
+private:
+	GLUquadric* m_sphere;
+public:
+	ShipView();
+	~ShipView();
+	void Render(Ship* ship);
+};
+
+
+class GameController: public Controller {
 private:
 	double m_rot;
 	double o_rot;
 	int m_width, m_height;
 
-	GLUquadric* obj;
+	// Models
+	std::vector<Ship*> m_ships;
+
+	// Rendering views
+	ShipView* v_ship;
 
 public:
 	GameController();
 	~GameController();
 
 	void Event(SDL_Event& evt);
-	void Loop(double dt);
+	void Loop(double);
 	void Render();
 };
 

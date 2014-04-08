@@ -93,7 +93,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_ships_OBJECTS = Ships.$(OBJEXT) shipscontroller.$(OBJEXT) \
-	views.$(OBJEXT) gamecontroller.$(OBJEXT)
+	views.$(OBJEXT) gamecontroller.$(OBJEXT) ship.$(OBJEXT)
 ships_OBJECTS = $(am_ships_OBJECTS)
 am__DEPENDENCIES_1 =
 ships_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -259,7 +259,8 @@ top_srcdir = @top_srcdir@
 ships_SOURCES = Ships.cpp \
 				shipscontroller.cpp \
 				views.cpp \
-				gamecontroller.cpp
+				gamecontroller.cpp \
+				ship.cpp 
 
 ships_INCLUDES = $(SDL_CFLAGS)
 ships_LDADD = $(LIBS)
@@ -352,6 +353,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ships.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamecontroller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ship.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipscontroller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/views.Po@am__quote@
 
