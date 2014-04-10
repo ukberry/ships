@@ -48,6 +48,7 @@ void ShipView::Render(Ship* ship) {
 		glVertex3f(0, -10, 0);
 		glVertex3f(-20, -30, 0);
 	glEnd();
+	//glBegin(GL_POLYGON);
 	glBegin(GL_LINE_STRIP);
 		glVertex3f(0, 40, 0);
 		glVertex3f(0, 0, 10);
@@ -96,7 +97,7 @@ Ship::Ship(double x, double y) {
 	this->m_rot = 0;
 	this->m_vr = 0;
 
-	this->m_maxthrust = 30;
+	this->m_maxthrust = 150;
 	this->m_thrust = 0;
 
 	this->m_vtol = 0.1;
@@ -120,15 +121,19 @@ void Ship::Loop(double dt) {
 		this->m_vy = v*cos(this->m_rot);
 	}
 
+	double dv = 0;
+
 	if(this->m_stop) {
 		double theta = atan2(this->m_vx,this->m_vy);
 		isnan(theta) ? theta = 0 : 0;
 
-		fabs(m_vx) < 1e-2 ? m_vx = 0 :
-		this->m_vx += -this->m_stop/1e5 *this->m_maxthrust*sin(theta)*dt;
+		dv = this->m_stop/1e5 *this->m_maxthrust*sin(theta)*dt;
+		fabs(m_vx) <= fabs(dv) ? m_vx = 0 :
+		this->m_vx -= dv;
 
-		fabs(m_vy) < 1e-2 ? m_vy = 0 :
-		this->m_vy += -this->m_stop/1e5  *this->m_maxthrust*cos(theta)*dt;
+		dv = this->m_stop/1e5  *this->m_maxthrust*cos(theta)*dt;
+		fabs(m_vy) <= fabs(dv) ? m_vy = 0 :
+		this->m_vy -= dv;
 	}
 	else {
 		this->m_vx += -this->m_thrust*sin(this->m_rot)*dt;
@@ -165,15 +170,15 @@ void Ship::setStop(int i) {
 }
 
 void Ship::setPhysics(int i) {
-	std::cout << "Physics set to " << i << "\n";
 	if(m_physics) this->m_phystime = this->m_time;
 	this->m_physics = i;
 
 }
 
 void Ship::resetPosition() {
-	this->m_x = 100;
-	this->m_y = 100;
+	this->m_x = 0;
+	this->m_y = 0;
 	this->m_z = 0;
+	this->m_rot = 0;
 	this->m_vx = this->m_vy = 0;
 }

@@ -107,14 +107,15 @@ void GameController::Render() {
 //	glVertex3f(2*-m_width, 2*m_height, 0);
 //	glEnd();
 	glBegin(GL_QUADS);
+		int size = 400;
 		glColor3f(0, 70./255, 0);
-		glVertex3f(-300, -300, 0);
+		glVertex3f(-size, -size, 0);
 		glColor3f(0, 102. / 255, 0);
-		glVertex3f(300, -300, 0);
+		glVertex3f(size, -size, 0);
 		glColor3f(0, 60./255, 90./255);
-		glVertex3f(300, 300, 0);
+		glVertex3f(size, size, 0);
 		glColor3f(0, 0, 192. / 255);
-		glVertex3f(-300, 300, 0);
+		glVertex3f(-size, size, 0);
 		glEnd();
 	glPopMatrix();
 

@@ -1,5 +1,8 @@
 bin_PROGRAMS=ships
-ships_SOURCES=	Ships.cpp \
+ships_SOURCES=	gamecontroller.h \
+				ships.h \
+				shipviews.h \
+				Ships.cpp \
 				shipscontroller.cpp \
 				views.cpp \
 				gamecontroller.cpp \

@@ -13,9 +13,9 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-m_surface(0), m_screenflags(0), m_fullscreen(1) {
-	this->m_fullscreen? this->m_width=1600: this->m_width = 800;
-	this->m_fullscreen? this->m_height=900: this->m_height = 600;
+m_surface(0), m_screenflags(0), m_fullscreen(0) {
+	this->m_fullscreen? this->m_width=1600: this->m_width = 1024;
+	this->m_fullscreen? this->m_height=900: this->m_height = 768;
 }
 
 ShipsView::~ShipsView() {
