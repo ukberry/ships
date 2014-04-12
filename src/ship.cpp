@@ -26,7 +26,6 @@ void ShipView::Render(Ship* ship) {
 	glTranslatef(ship->m_x, ship->m_y, 0);
 	glRotatef(ship->m_rot*180/PI,0,0,1);
 
-
 	glLineWidth(1.7f);
 	glPushMatrix();
 	glBegin(GL_POLYGON);

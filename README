@@ -1,1 +1,11 @@
-Sample readme file for Ships project.
+Ships
+
+Controlling your ship:
+
+LEFT + RIGHT (arrow keys):  Rotate the ship
+SPACEBAR:                   Thrust
+S:                          Stop the ship
+Z:                          Decrease altitude
+X:                          Increase altitude
+
+H:                          Reset ship's position

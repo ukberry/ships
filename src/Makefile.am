@@ -6,7 +6,8 @@ ships_SOURCES=	gamecontroller.h \
 				shipscontroller.cpp \
 				views.cpp \
 				gamecontroller.cpp \
-				ship.cpp 
+				ship.cpp \
+				camera.cpp
 				
 ships_INCLUDES= $(SDL_CFLAGS)
 ships_LDADD= $(LIBS)

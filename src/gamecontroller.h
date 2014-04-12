@@ -17,6 +17,7 @@ class ShipView;
 
 class Ship {
 	friend class ShipView;
+	friend class GameController;
 private:
 	double m_x;
 	double m_y;
@@ -52,6 +53,21 @@ public:
 	void resetPosition();
 };
 
+class Camera {
+private:
+	double m_x, m_y; 	// Current camera position
+	double m_tc; 	   	// Time constant of movement
+	double m_t; 		// Time since movement started
+	double m_xf, m_yf; 	// Final position
+public:
+	Camera(double x,double y,double tc);
+
+	void MoveTo(double x, double y);
+	void Loop(double dt);
+	void Render();
+
+};
+
 class ShipView {
 private:
 	GLUquadric* m_sphere;
@@ -73,6 +89,9 @@ private:
 
 	// Rendering views
 	ShipView* v_ship;
+
+	// Camera
+	Camera* m_cam;
 
 public:
 	GameController();

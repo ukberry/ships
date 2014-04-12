@@ -16,6 +16,8 @@ GameController::GameController() :
 	/* Add a new ship to the scene (our player ship) */
 	this->m_ships.push_back(new Ship(0, 0));
 	std::cout << "Player ship created\n";
+
+	this->m_cam = new Camera(0,0,200);
 }
 
 GameController::~GameController() {
@@ -28,6 +30,7 @@ GameController::~GameController() {
 		std::cout << "Player ship deleted!\n";
 	}
 
+	delete this->m_cam;
 	std::cout << "Game Controller Freed!\n";
 }
 
@@ -59,6 +62,9 @@ void GameController::Loop(double dt) {
 	for (int i = 0; i < len; i++) {
 		this->m_ships[i]->Loop(dt);
 	}
+	this->m_cam->MoveTo(ship->m_x,ship->m_y);
+
+	this->m_cam->Loop(dt);
 
 }
 
@@ -94,6 +100,9 @@ void GameController::Render() {
 
 	glRotated(this->m_rot*0.04,0,0,1);
 	//glTranslated(-m_width/2, -m_height/2, 0);
+
+	// Add camera position
+	this->m_cam->Render();
 
 	glPushMatrix();
 //	glBegin(GL_QUADS);
