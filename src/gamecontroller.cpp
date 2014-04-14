@@ -36,7 +36,7 @@ GameController::~GameController() {
 
 void GameController::Loop(double dt) {
 
-	// Get the key states (event handling not that reliable for multi-key presses).
+	// Get the key states
 	Uint8* keys = SDL_GetKeyState(NULL);
 
 	Ship* ship = this->m_ships[0];
@@ -62,8 +62,9 @@ void GameController::Loop(double dt) {
 	for (int i = 0; i < len; i++) {
 		this->m_ships[i]->Loop(dt);
 	}
-	this->m_cam->MoveTo(ship->m_x,ship->m_y);
 
+	// Make the camera move to the position of the ship
+	this->m_cam->MoveTo(ship->m_x,ship->m_y);
 	this->m_cam->Loop(dt);
 
 }
@@ -73,22 +74,10 @@ void GameController::Event(SDL_Event& evt) {
 	// Catch the quit events and process them before rendering.
 	if (evt.type == SDL_KEYDOWN) {
 		SDLKey key = evt.key.keysym.sym;
-		if (key == SDLK_g)
-			this->m_ships[0]->setPhysics(1); // 1 is grip!
-		if (key == SDLK_f)
-			this->m_ships[0]->setPhysics(0); // 0 is free!
 		if (key == SDLK_h)
 			this->m_ships[0]->resetPosition();
 	}
-//	if (evt.type == SDL_KEYUP) {
-//		SDLKey key = evt.key.keysym.sym;
-//		if (key == SDLK_LEFT || key == SDLK_RIGHT)
-//			this->m_ships[0]->m_vr = 0;
-//
-//		if (key == SDLK_SPACE)
-//			this->m_ships[0]->m_thrust = 0;
-//
-//	}
+
 }
 
 void GameController::Render() {
@@ -104,27 +93,18 @@ void GameController::Render() {
 	// Add camera position
 	this->m_cam->Render();
 
+	// Landscape drawing
 	glPushMatrix();
-//	glBegin(GL_QUADS);
-//	glColor3f(0, 70./255, 0);
-//	glVertex3f(2*-m_width, 2*-m_height, 0);
-//	glColor3f(0, 102. / 255, 0);
-//	glVertex3f(2*m_width, 2*-m_height, 0);
-//	glColor3f(0, 60./255, 90./255);
-//	glVertex3f(2*m_width, 2*m_height, 0);
-//	glColor3f(0, 0, 192. / 255);
-//	glVertex3f(2*-m_width, 2*m_height, 0);
-//	glEnd();
 	glBegin(GL_QUADS);
-		int size = 400;
-		glColor3f(0, 70./255, 0);
-		glVertex3f(-size, -size, 0);
+		int size = 800;
+		glColor3f(0.9, 70./255, 0);
+		glVertex3f(-size, -size, -1);
 		glColor3f(0, 102. / 255, 0);
-		glVertex3f(size, -size, 0);
+		glVertex3f(size, -size, -1);
 		glColor3f(0, 60./255, 90./255);
-		glVertex3f(size, size, 0);
+		glVertex3f(size, size, -1);
 		glColor3f(0, 0, 192. / 255);
-		glVertex3f(-size, size, 0);
+		glVertex3f(-size, size, -1);
 		glEnd();
 	glPopMatrix();
 
@@ -133,88 +113,9 @@ void GameController::Render() {
 		this->v_ship->Render(*it);
 	}
 
-//	glPushMatrix();
+	glLoadIdentity();
 
-//	glTranslatef(100., 100. + 400 * sin(m_rot * 0.005), 1.);
-//	//glRotatef(m_rot,0,0,1);
-//	glRotatef(sin(o_rot / 100) * 20, 0, 1, 0);
-//	glLineWidth(1.7f);
-//	glBegin(GL_LINE_LOOP);
-//	//glTranslatef(-20,-30,0);
-//	glColor3f(0, 1, 0);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, -10, 0);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(0, -10, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//	glTranslatef(0, -20, 5);
-//	glColor4f(1, .6, .4, 0.3);
-//	//gluSphere(this->obj, 10, 8, 8);
-//	glColor4f(1, .7, .5, 0.8);
-//	//gluSphere(this->obj, 5, 8, 8);
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslatef(300. + 50 * sin(0.05 * m_rot), 100. + 50 * cos(0.05 * m_rot),
-//			1.);
-//	glColor4f(1, 0, 0, 1);
-//	glRotatef(m_rot * 1.2, 0, 0, 1);
-//	glRotatef(o_rot * 1, 0, 1, 0);
-//	glLineWidth(1.6f);
-//	glBegin(GL_LINE_LOOP);
-//	//glTranslatef(-20,-30,0);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, -10, 0);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(0, -10, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslatef(500., 100., 1.);
-//	glRotatef(m_rot * 1, 0, 0, -1);
-//	glRotatef(o_rot, 0, 1, 0);
-//	glLineWidth(1.6f);
-//	glColor3f(0, 0.1, 1.);
-//	glBegin(GL_LINE_LOOP);
-//	//glTranslatef(-20,-30,0);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, -10, 0);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(0, 40, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(0, -10, 0);
-//	glEnd();
-//	glBegin(GL_LINE_STRIP);
-//	glVertex3f(20, -30, 0);
-//	glVertex3f(0, 0, 10);
-//	glVertex3f(-20, -30, 0);
-//	glEnd();
-//
-//	glPopMatrix();
+	// Sprite graphics drawn here
 
 	SDL_GL_SwapBuffers();
 }

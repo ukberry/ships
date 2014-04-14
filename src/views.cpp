@@ -50,13 +50,16 @@ int ShipsView::CreateView() {
 	glClearColor(0.f/255.0f, 0, 0, 1.0f);
 	glClearDepth(1.0f);
 
+	glEnable(GL_DEPTH_TEST);
+//	    glEnable(GL_CULL_FACE);
+
 	// Viewport set
 	glViewport(0, 0, m_width, m_height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(0, m_width, 0, m_height , 1000, -1000);
+	glOrtho(0, m_width, 0, m_height ,-10000, 10000);
 
 	glMatrixMode(GL_MODELVIEW);
 	//glMatrixMode(GL_PROJECTION);

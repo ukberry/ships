@@ -90,7 +90,7 @@ private:
 	// Rendering views
 	ShipView* v_ship;
 
-	// Camera
+	/// Reference to the Camera
 	Camera* m_cam;
 
 public:

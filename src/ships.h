@@ -13,11 +13,20 @@
 class ShipsView;
 class Controller;
 
+/**
+ * The main program controller, handles the application states.
+ */
 class ShipsController {
 private:
+	/// Reference to the root controller instance
 	static ShipsController* _root;
+
+	/// Handle to the main view (usually the master window).
 	ShipsView* m_view;
 
+	/**
+	 * Define the set of games states.
+	 */
 	class State {
 	public:
 			static const int None = 0;
@@ -31,9 +40,17 @@ private:
 	int m_prevState;
 	int m_running;
 
+	/// A pointer to the active game state controller.
 	Controller *m_active;
 public:
+	/**
+	 * Returns the main application controller
+	 *
+	 * @return ShipController* The main application controller.
+	 */
 	static ShipsController* GetInstance();
+
+	// Constructors and Destructor
 	ShipsController();
 	ShipsController(double);
 	~ShipsController();
@@ -41,6 +58,7 @@ public:
 	int Init();
 	int Run();
 
+	/// Return the main view class used by the controller.
 	ShipsView* GetView();
 };
 
