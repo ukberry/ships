@@ -12,23 +12,35 @@ GameController::GameController() :
 
 	/** This view renders each ship in the scene. */
 	this->v_ship = new ShipView();
+	this->v_obj  = new ObjectView();
 
 	/* Add a new ship to the scene (our player ship) */
 	this->m_ships.push_back(new Ship(0, 0));
 	std::cout << "Player ship created\n";
 
 	this->m_cam = new Camera(0,0,200);
+
+	this->m_objects.push_back(new Object(40,50,0,200,400,100));
+	this->m_objects.push_back(new Object(90,-200,0,100,200,50));
 }
 
 GameController::~GameController() {
 
+	// Free rendering classes.
 	delete this->v_ship;
+	delete this->v_obj;
 
 	std::vector<Ship*>::iterator it;
 	for (it = this->m_ships.begin(); it != m_ships.end(); it++) {
 		delete *it;
 		std::cout << "Player ship deleted!\n";
 	}
+
+	std::vector<Object*>::iterator it2;
+		for (it2 = this->m_objects.begin(); it2 != m_objects.end(); it2++) {
+			delete *it2;
+			std::cout << "Object freed!\n";
+		}
 
 	delete this->m_cam;
 	std::cout << "Game Controller Freed!\n";
@@ -57,6 +69,16 @@ void GameController::Loop(double dt) {
 	m_rot += 0.07 * dt;
 	o_rot += 0.2 * dt;
 
+	static int pMouseX, pMouseY;
+	int mouseX, mouseY;
+
+	if (SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(2)) this->m_cam->RotateBy(mouseX-pMouseX,mouseY-pMouseY);
+
+	pMouseX = mouseX;
+	pMouseY = mouseY;
+
+	this->m_cam->RotateBy(0.07 * dt*0.05,0);
+
 	// For each ship, execute the loop function to step through time.
 	std::vector<Ship*>::size_type len = this->m_ships.size();
 	for (int i = 0; i < len; i++) {
@@ -74,8 +96,10 @@ void GameController::Event(SDL_Event& evt) {
 	// Catch the quit events and process them before rendering.
 	if (evt.type == SDL_KEYDOWN) {
 		SDLKey key = evt.key.keysym.sym;
-		if (key == SDLK_h)
+		if (key == SDLK_h) {
 			this->m_ships[0]->resetPosition();
+			this->m_cam->SetRotation(-45,-50);
+			}
 	}
 
 }
@@ -85,10 +109,6 @@ void GameController::Render() {
 	glLoadIdentity();
 
 	glTranslated(m_width/2, m_height/2, 0);
-	glRotated(-50,1,0,0);
-
-	glRotated(this->m_rot*0.04,0,0,1);
-	//glTranslated(-m_width/2, -m_height/2, 0);
 
 	// Add camera position
 	this->m_cam->Render();
@@ -108,6 +128,13 @@ void GameController::Render() {
 		glEnd();
 	glPopMatrix();
 
+	// Draw the objects using the ObjectView class.
+	std::vector<Object*>::iterator it2;
+	for (it2 = this->m_objects.begin(); it2 != m_objects.end(); it2++) {
+		this->v_obj->Render(*it2);
+	}
+
+	// Draw the ship based on the ShipView class passed.
 	std::vector<Ship*>::iterator it;
 	for (it = this->m_ships.begin(); it != m_ships.end(); it++) {
 		this->v_ship->Render(*it);

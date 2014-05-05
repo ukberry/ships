@@ -12,11 +12,14 @@
 
 #include <math.h>
 
+#include "object.h"
+
 //class Controller;
 class ShipView;
 
 class Ship {
 	friend class ShipView;
+	friend class ObjectView;
 	friend class GameController;
 private:
 	double m_x;
@@ -59,9 +62,13 @@ private:
 	double m_tc; 	   	// Time constant of movement
 	double m_t; 		// Time since movement started
 	double m_xf, m_yf; 	// Final position
+	double phi, theta;
+	double m_sensitivity;
 public:
 	Camera(double x,double y,double tc);
 
+	void RotateBy(double phi, double theta);
+	void SetRotation(double phi, double theta);
 	void MoveTo(double x, double y);
 	void Loop(double dt);
 	void Render();
@@ -86,9 +93,11 @@ private:
 
 	// Models
 	std::vector<Ship*> m_ships;
+	std::vector<Object*> m_objects;
 
 	// Rendering views
 	ShipView* v_ship;
+	ObjectView* v_obj;
 
 	/// Reference to the Camera
 	Camera* m_cam;
