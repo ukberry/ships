@@ -127,7 +127,7 @@ void Ship::Loop(double dt) {
 
 	if(this->m_stop) {
 		double theta = atan2(this->m_vx,this->m_vy);
-		isnan(theta) ? theta = 0 : 0;
+		std::isnan(theta) ? theta = 0 : 0;
 
 		dv = this->m_stop/1e5 *this->m_maxthrust*sin(theta)*dt;
 		fabs(m_vx) <= fabs(dv) ? m_vx = 0 :
