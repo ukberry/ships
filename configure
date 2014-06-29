@@ -4710,7 +4710,7 @@ else
 fi
 
 
-		for ac_header in GL/gl.h GL/glu.h
+		for ac_header in GL/glew.h GL/gl.h GL/glu.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -4720,7 +4720,7 @@ if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
 _ACEOF
 
 else
-  for ac_header in OpenGL/gl.h OpenGL/glu.h
+  for ac_header in OpenGL/glew.h OpenGL/gl.h OpenGL/glu.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -4837,6 +4837,102 @@ fi
 if test "xno" = "x$os_win32"; then
 
 if test `uname -s` != Darwin; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lGLU" >&5
+$as_echo_n "checking for gluLookAt in -lGLU... " >&6; }
+if ${ac_cv_lib_GLU_gluLookAt+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lGLU  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char gluLookAt ();
+int
+main ()
+{
+return gluLookAt ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_GLU_gluLookAt=yes
+else
+  ac_cv_lib_GLU_gluLookAt=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_GLU_gluLookAt" >&5
+$as_echo "$ac_cv_lib_GLU_gluLookAt" >&6; }
+if test "x$ac_cv_lib_GLU_gluLookAt" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBGLU 1
+_ACEOF
+
+  LIBS="-lGLU $LIBS"
+
+else
+
+     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lMesaGLU" >&5
+$as_echo_n "checking for gluLookAt in -lMesaGLU... " >&6; }
+if ${ac_cv_lib_MesaGLU_gluLookAt+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lMesaGLU  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char gluLookAt ();
+int
+main ()
+{
+return gluLookAt ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_MesaGLU_gluLookAt=yes
+else
+  ac_cv_lib_MesaGLU_gluLookAt=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_MesaGLU_gluLookAt" >&5
+$as_echo "$ac_cv_lib_MesaGLU_gluLookAt" >&6; }
+if test "x$ac_cv_lib_MesaGLU_gluLookAt" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBMESAGLU 1
+_ACEOF
+
+  LIBS="-lMesaGLU $LIBS"
+
+else
+  echo "incomplete OpenGL (no GLU)";exit 1
+fi
+
+
+fi
+
+
      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glInitNames in -lGL" >&5
 $as_echo_n "checking for glInitNames in -lGL... " >&6; }
 if ${ac_cv_lib_GL_glInitNames+:} false; then :
@@ -4933,13 +5029,13 @@ fi
 fi
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lGLU" >&5
-$as_echo_n "checking for gluLookAt in -lGLU... " >&6; }
-if ${ac_cv_lib_GLU_gluLookAt+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lGLEW" >&5
+$as_echo_n "checking for glewInit in -lGLEW... " >&6; }
+if ${ac_cv_lib_GLEW_glewInit+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lGLU  $LIBS"
+LIBS="-lGLEW  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4949,42 +5045,42 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char gluLookAt ();
+char glewInit ();
 int
 main ()
 {
-return gluLookAt ();
+return glewInit ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_GLU_gluLookAt=yes
+  ac_cv_lib_GLEW_glewInit=yes
 else
-  ac_cv_lib_GLU_gluLookAt=no
+  ac_cv_lib_GLEW_glewInit=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_GLU_gluLookAt" >&5
-$as_echo "$ac_cv_lib_GLU_gluLookAt" >&6; }
-if test "x$ac_cv_lib_GLU_gluLookAt" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_GLEW_glewInit" >&5
+$as_echo "$ac_cv_lib_GLEW_glewInit" >&6; }
+if test "x$ac_cv_lib_GLEW_glewInit" = xyes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBGLU 1
+#define HAVE_LIBGLEW 1
 _ACEOF
 
-  LIBS="-lGLU $LIBS"
+  LIBS="-lGLEW $LIBS"
 
 else
 
-     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lMesaGLU" >&5
-$as_echo_n "checking for gluLookAt in -lMesaGLU... " >&6; }
-if ${ac_cv_lib_MesaGLU_gluLookAt+:} false; then :
+     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lMesaGLEW" >&5
+$as_echo_n "checking for glewInit in -lMesaGLEW... " >&6; }
+if ${ac_cv_lib_MesaGLEW_glewInit+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lMesaGLU  $LIBS"
+LIBS="-lMesaGLEW  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4994,45 +5090,49 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char gluLookAt ();
+char glewInit ();
 int
 main ()
 {
-return gluLookAt ();
+return glewInit ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_MesaGLU_gluLookAt=yes
+  ac_cv_lib_MesaGLEW_glewInit=yes
 else
-  ac_cv_lib_MesaGLU_gluLookAt=no
+  ac_cv_lib_MesaGLEW_glewInit=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_MesaGLU_gluLookAt" >&5
-$as_echo "$ac_cv_lib_MesaGLU_gluLookAt" >&6; }
-if test "x$ac_cv_lib_MesaGLU_gluLookAt" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_MesaGLEW_glewInit" >&5
+$as_echo "$ac_cv_lib_MesaGLEW_glewInit" >&6; }
+if test "x$ac_cv_lib_MesaGLEW_glewInit" = xyes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBMESAGLU 1
+#define HAVE_LIBMESAGLEW 1
 _ACEOF
 
-  LIBS="-lMesaGLU $LIBS"
+  LIBS="-lMesaGLEW $LIBS"
 
 else
-  echo "incomplete OpenGL (no GLU)";exit 1
+  echo "GLEW is mandatory";exit 1
 fi
 
 
 fi
+
 
 fi
 
 else
 LIBS="-lopengl32 -lglu32 $LIBS"
 fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: $LIBS" >&5
+$as_echo "$as_me: $LIBS" >&6;}
 
 ac_config_files="$ac_config_files Makefile src/Makefile"
 

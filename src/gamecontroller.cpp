@@ -1,4 +1,4 @@
-#include "ships.h"
+#include "shipsviews.h"
 #include "gamecontroller.h"
 
 GameController::GameController() :
@@ -12,7 +12,6 @@ GameController::GameController() :
 
 	/** This view renders each ship in the scene. */
 	this->v_ship = new ShipView();
-	this->v_obj  = new ObjectView();
 
 	/* Add a new ship to the scene (our player ship) */
 	this->m_ships.push_back(new Ship(0, 0));
@@ -20,27 +19,67 @@ GameController::GameController() :
 
 	this->m_cam = new Camera(0,0,200);
 
-	this->m_objects.push_back(new Object(40,50,0,200,400,100));
-	this->m_objects.push_back(new Object(90,-200,0,100,200,50));
+	struct vertice {
+		GLfloat coord[2];
+		GLfloat colour[3];
+	};
+
+	struct vertice verts[] = {
+				{{-0.8,-0.8,}, {.7,0.,0.}},
+				{{0.,0.8}, {0.,1.,0.}},
+				{{0.8,-0.8},{0.,0.,.7}}
+		};
+
+
+
+
+	glUseProgram(view->GetGraphicsProg());
+
+	glGenVertexArrays(VAOCount, VAOs);
+	glGenBuffers(BufferCount, Buffers);
+
+	glBindVertexArray(VAOs[Test]);
+	glBindBuffer(GL_ARRAY_BUFFER, Buffers[TestBuffer]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(va_coord, 2, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,coord));
+	glVertexAttribPointer(va_colour, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,colour));
+
+	glEnableVertexAttribArray(va_coord);
+	glEnableVertexAttribArray(va_colour);
+
+
+	struct vertice verts2[] = {
+						{{-0.8,0.8,}, {.7,0.,0.}},
+						{{0.,-0.8}, {0.,1.,0.}},
+						{{0.8,0.8},{0.,0.,.7}}
+				};
+
+	glBindVertexArray(VAOs[Test2]);
+	glBindBuffer(GL_ARRAY_BUFFER, Buffers[OtherBuffer]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts2), verts2, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(va_coord, 2, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,coord));
+	glVertexAttribPointer(va_colour, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,colour));
+
+	glEnableVertexAttribArray(va_coord);
+	glEnableVertexAttribArray(va_colour);
 }
 
 GameController::~GameController() {
 
 	// Free rendering classes.
 	delete this->v_ship;
-	delete this->v_obj;
+
+	// Free graphics card objects
+	glDeleteVertexArrays(VAOCount, VAOs);
+	glDeleteBuffers(BufferCount, Buffers);
 
 	std::vector<Ship*>::iterator it;
 	for (it = this->m_ships.begin(); it != m_ships.end(); it++) {
 		delete *it;
 		std::cout << "Player ship deleted!\n";
 	}
-
-	std::vector<Object*>::iterator it2;
-		for (it2 = this->m_objects.begin(); it2 != m_objects.end(); it2++) {
-			delete *it2;
-			std::cout << "Object freed!\n";
-		}
 
 	delete this->m_cam;
 	std::cout << "Game Controller Freed!\n";
@@ -106,43 +145,13 @@ void GameController::Event(SDL_Event& evt) {
 
 void GameController::Render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 
-	glTranslated(m_width/2, m_height/2, 0);
-
-	// Add camera position
-	this->m_cam->Render();
-
-	// Landscape drawing
-	glPushMatrix();
-	glBegin(GL_QUADS);
-		int size = 800;
-		glColor3f(0.9, 70./255, 0);
-		glVertex3f(-size, -size, -1);
-		glColor3f(0, 102. / 255, 0);
-		glVertex3f(size, -size, -1);
-		glColor3f(0, 60./255, 90./255);
-		glVertex3f(size, size, -1);
-		glColor3f(0, 0, 192. / 255);
-		glVertex3f(-size, size, -1);
-		glEnd();
-	glPopMatrix();
-
-	// Draw the objects using the ObjectView class.
-	std::vector<Object*>::iterator it2;
-	for (it2 = this->m_objects.begin(); it2 != m_objects.end(); it2++) {
-		this->v_obj->Render(*it2);
+	for (int i = 0; i < VAOCount; i++) {
+		glBindVertexArray(VAOs[i]);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
-	// Draw the ship based on the ShipView class passed.
-	std::vector<Ship*>::iterator it;
-	for (it = this->m_ships.begin(); it != m_ships.end(); it++) {
-		this->v_ship->Render(*it);
-	}
-
-	glLoadIdentity();
-
-	// Sprite graphics drawn here
+	glFlush();
 
 	SDL_GL_SwapBuffers();
 }

@@ -8,7 +8,11 @@
 #ifndef SHIPS_H_
 #define SHIPS_H_
 
-#include "SDL/SDL.h"
+#define SHIP_CONTROLLER_MAIN 3.14789632
+
+#include <vector>
+
+#include <SDL/SDL.h>
 
 class ShipsView;
 class Controller;
@@ -78,25 +82,7 @@ public:
 
 };
 
-class ShipsView {
-private:
-	SDL_Surface *m_surface;
-	int m_screenflags;
-	bool m_fullscreen;
-	int m_width;
-	int m_height;
 
-public:
-	ShipsView();
-	~ShipsView();
-
-	int CreateView();
-	void Render();
-	void Loop(double);
-
-	int GetWidth();
-	int GetHeight();
-};
 
 
 #endif /* SHIPS_H_ */

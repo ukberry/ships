@@ -6,6 +6,7 @@
  */
 
 #include "gamecontroller.h"
+#include "shipsviews.h"
 
 /**
  * Creates a new camera object at the specified location.

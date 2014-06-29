@@ -94,14 +94,16 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__ships_SOURCES_DIST = gamecontroller.h ships.h object.h shipviews.h \
-	shipscontroller.cpp views.cpp gamecontroller.cpp ship.cpp \
-	camera.cpp object.cpp Ships_win32.cpp Ships.cpp
+am__ships_SOURCES_DIST = gamecontroller.h ships.h shipsviews.h \
+	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
+	ship.cpp camera.cpp shaders.h shaders.cpp Ships_win32.cpp \
+	Ships.cpp
 @WIN_32_TRUE@am__objects_1 = Ships_win32.$(OBJEXT)
 @WIN_32_FALSE@am__objects_2 = Ships.$(OBJEXT)
-am_ships_OBJECTS = shipscontroller.$(OBJEXT) views.$(OBJEXT) \
-	gamecontroller.$(OBJEXT) ship.$(OBJEXT) camera.$(OBJEXT) \
-	object.$(OBJEXT) $(am__objects_1) $(am__objects_2)
+am_ships_OBJECTS = shipscontroller.$(OBJEXT) shipview.$(OBJEXT) \
+	views.$(OBJEXT) gamecontroller.$(OBJEXT) ship.$(OBJEXT) \
+	camera.$(OBJEXT) shaders.$(OBJEXT) $(am__objects_1) \
+	$(am__objects_2)
 ships_OBJECTS = $(am_ships_OBJECTS)
 am__DEPENDENCIES_1 =
 ships_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -276,10 +278,12 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ships_SOURCES = gamecontroller.h ships.h object.h shipviews.h \
-	shipscontroller.cpp views.cpp gamecontroller.cpp ship.cpp \
-	camera.cpp object.cpp $(am__append_1) $(am__append_2)
-ships_INCLUDES = $(SDL_CFLAGS)
+ships_SOURCES = gamecontroller.h ships.h shipsviews.h \
+	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
+	ship.cpp camera.cpp shaders.h shaders.cpp $(am__append_1) \
+	$(am__append_2)
+
+#ships_INCLUDES= $(SDL_CFLAGS)
 ships_LDADD = $(LIBS)
 all: all-am
 
@@ -372,9 +376,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ships_win32.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/camera.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamecontroller.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/object.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shaders.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ship.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipscontroller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipview.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/views.Po@am__quote@
 
 .cpp.o:

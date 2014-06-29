@@ -1,4 +1,5 @@
 #include "ships.h"
+#include "shipsviews.h"
 
 #include <iostream>
 #include <string>
@@ -12,7 +13,7 @@ ShipsController* ShipsController::_root = 0;
  */
 ShipsController* ShipsController::GetInstance() {
 	if (!_root)
-		_root = new ShipsController(3.14);
+		_root = new ShipsController(SHIP_CONTROLLER_MAIN);
 	return _root;
 }
 
@@ -30,10 +31,12 @@ ShipsController::ShipsController() :
 ShipsController::ShipsController(double check) :
 		m_running(true), m_state(ShipsController::State::Startup), m_view(0), m_prevState(
 				0), m_active(0) {
-	if (check != 3.14) {
+	if (check != SHIP_CONTROLLER_MAIN) {
 		cerr << "ShipController class constructor sanity check value error!\n";
 		throw "Check value failed!";
 	}
+
+	if(_root != 0) throw "There is already a ships controller!";
 }
 
 ShipsController::~ShipsController() {

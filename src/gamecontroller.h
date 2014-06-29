@@ -3,23 +3,18 @@
 
 #include "ships.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <glm/glm.hpp>
-
 #include <iostream>
 #include <vector>
 
 #include <math.h>
 
-#include "object.h"
+typedef unsigned int GLuint;
+typedef int GLint;
 
-//class Controller;
 class ShipView;
 
 class Ship {
 	friend class ShipView;
-	friend class ObjectView;
 	friend class GameController;
 private:
 	double m_x;
@@ -44,6 +39,7 @@ private:
 	double m_time;
 	double m_phystime;
 	int m_physics;
+
 public:
 	Ship(double x, double y);
 	void Loop(double);
@@ -75,15 +71,6 @@ public:
 
 };
 
-class ShipView {
-private:
-	GLUquadric* m_sphere;
-public:
-	ShipView();
-	~ShipView();
-	void Render(Ship* ship);
-};
-
 
 class GameController: public Controller {
 private:
@@ -93,14 +80,28 @@ private:
 
 	// Models
 	std::vector<Ship*> m_ships;
-	std::vector<Object*> m_objects;
 
 	// Rendering views
 	ShipView* v_ship;
-	ObjectView* v_obj;
 
 	/// Reference to the Camera
 	Camera* m_cam;
+
+	//
+	enum VAO_indices {
+		Test, Test2, VAOCount
+	};
+	enum Buffer_indices {
+		TestBuffer, OtherBuffer, BufferCount
+	};
+
+	enum Vertice_attributes {
+		va_coord, va_colour
+	};
+
+	GLuint VAOs[VAOCount];
+	GLuint Buffers[BufferCount];
+
 
 public:
 	GameController();

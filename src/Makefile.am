@@ -1,14 +1,15 @@
 bin_PROGRAMS=ships
 ships_SOURCES=	gamecontroller.h \
 				ships.h \
-				object.h \
-				shipviews.h \
+				shipsviews.h \
 				shipscontroller.cpp \
+				shipview.cpp \
 				views.cpp \
 				gamecontroller.cpp \
 				ship.cpp \
 				camera.cpp \
-				object.cpp
+				shaders.h \
+				shaders.cpp
 				
 
 if WIN_32
@@ -17,5 +18,5 @@ else
 ships_SOURCES += Ships.cpp
 endif
 				
-ships_INCLUDES= $(SDL_CFLAGS)
+#ships_INCLUDES= $(SDL_CFLAGS)
 ships_LDADD= $(LIBS)

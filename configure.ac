@@ -33,8 +33,8 @@ AC_MSG_RESULT([$os_win32])
 AM_CONDITIONAL(WIN_32,[test "xyes" = "x$os_win32"])
 
 dnl Check for OpenGL (Original or Mesa) (or osX-framework)
-		AC_CHECK_HEADERS([GL/gl.h GL/glu.h],[],
-		    [AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h],[],[echo "OpenGL is mandatory";exit 1;])
+		AC_CHECK_HEADERS([GL/glew.h GL/gl.h GL/glu.h],[],
+		    [AC_CHECK_HEADERS([OpenGL/glew.h OpenGL/gl.h OpenGL/glu.h],[],[echo "OpenGL is mandatory";exit 1;])
 		    ])
 
 
@@ -45,16 +45,21 @@ AC_CHECK_LIB([SDL],[SDL_Init],,)
 if test "xno" = "x$os_win32"; then
 
 if test `uname -s` != Darwin; then
-     AC_CHECK_LIB([GL], [glInitNames],,[
-     AC_CHECK_LIB(MesaGL,glInitNames,,
-            [echo "OpenGL is mandatory";exit 1]])
-)
-
 dnl Check for GLU (Original or Mesa)
-AC_CHECK_LIB(GLU, gluLookAt, ,[
-     AC_CHECK_LIB(MesaGLU,gluLookAt,,
-     [echo "incomplete OpenGL (no GLU)";exit 1])]
-)
+    AC_CHECK_LIB(GLU, gluLookAt, ,[
+        AC_CHECK_LIB(MesaGLU,gluLookAt,,
+            [echo "incomplete OpenGL (no GLU)";exit 1])]
+    )
+
+    AC_CHECK_LIB([GL], [glInitNames],,[
+        AC_CHECK_LIB(MesaGL,glInitNames,,
+            [echo "OpenGL is mandatory";exit 1]])
+    )
+
+    AC_CHECK_LIB([GLEW], [glewInit],,[
+        AC_CHECK_LIB(MesaGLEW,glewInit,,
+            [echo "GLEW is mandatory";exit 1]])
+    )
 fi
 
 else

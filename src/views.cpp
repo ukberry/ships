@@ -5,93 +5,88 @@
  *      Author: sam
  */
 
-#include "shipviews.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <glm/glm.hpp>
+#include "shipsviews.h"
+
+#include "shaders.h"
 
 #include <math.h>
 
 ShipsView::ShipsView() :
-m_surface(0), m_screenflags(0), m_fullscreen(0) {
-	this->m_fullscreen? this->m_width=1920: this->m_width = 1024;
-	this->m_fullscreen? this->m_height=1080: this->m_height = 768;
+		m_surface(0), m_screenflags(0), m_fullscreen(0), m_program(0) {
+	this->m_fullscreen ? this->m_width = 1920 : this->m_width = 1024;
+	this->m_fullscreen ? this->m_height = 1080 : this->m_height = 768;
 }
 
 ShipsView::~ShipsView() {
-	this->m_surface = SDL_SetVideoMode(0,0,0, this->m_screenflags);
-	if(this->m_surface)
+
+	this->m_surface = SDL_SetVideoMode(0, 0, 0, this->m_screenflags);
+	if (this->m_surface)
 		SDL_FreeSurface(this->m_surface);
+
+	if (m_program) {
+		glDeleteProgram(m_program);
+		std::cout << "OpenGL program freed from graphics card.\n";
+	}
 
 }
 
 int ShipsView::CreateView() {
 
 	// Initialise SDL
-	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		return 1;
 
 	// If it hasn't already been created (it shouldn't have), create a new window.
-	if(!this->m_surface)
-		this->m_surface = SDL_SetVideoMode(m_width,m_height, 32,
-				SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
+	if (!this->m_surface)
+		this->m_surface = SDL_SetVideoMode(m_width, m_height, 32,
+		SDL_HWSURFACE | SDL_GL_DOUBLEBUFFER | SDL_OPENGL);
 
 	// If this function fails, then we can't continue; return a fail code.
-	if(!this->m_surface) return 1;
+	if (!this->m_surface)
+		return 1;
 
 	this->m_screenflags = this->m_surface->flags;
 
-	if(this->m_fullscreen)
-		this->m_surface = SDL_SetVideoMode(0,0,0, this->m_screenflags | SDL_FULLSCREEN);
+	if (this->m_fullscreen)
+		this->m_surface = SDL_SetVideoMode(0, 0, 0,
+				this->m_screenflags | SDL_FULLSCREEN);
 
 	SDL_ShowCursor(0);
 
+	/* Extension wrangler initialising */
+	GLenum glew_status = glewInit();
+	if (glew_status != GLEW_OK) {
+		std::cerr << "Error: " << glewGetErrorString(glew_status) << "\n";
+		return EXIT_FAILURE;
+	}
+
+	m_program = create_program();
+
+	if(!m_program) {
+		std::cerr << "Error: Failed to compile shaders on the graphics card\n";
+		return EXIT_FAILURE;
+	}
+
 	//glClearColor(192.0f/255.0f, 0, 0, 1.0f);
-	glClearColor(0.f/255.0f, 0, 0, 1.0f);
+	glClearColor(1., 1., 1., 1.0f);
 	glClearDepth(1.0f);
 
 	glEnable(GL_DEPTH_TEST);
-//	    glEnable(GL_CULL_FACE);
 
-	// Viewport set
-	glViewport(0, 0, m_width, m_height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glOrtho(0, m_width, 0, m_height ,-10000, 10000);
-
-	glMatrixMode(GL_MODELVIEW);
-	//glMatrixMode(GL_PROJECTION);
-
-	glShadeModel(GL_SMOOTH);
-
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable( GL_POLYGON_SMOOTH );
-	//glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
-	//glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
+	glEnable (GL_LINE_SMOOTH);
+	glEnable(GL_POLYGON_SMOOTH);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glDisable(GL_DEPTH_TEST);
+	glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_DONT_CARE);
 
-	glLoadIdentity();
+	glLineWidth(1.5f);
 
 	// Set the window's title.
-	SDL_WM_SetCaption("Ships <alpha> - Sam Berry",0);
-
-
+	SDL_WM_SetCaption("Ships <alpha> - Sam Berry", 0);
 
 	// Return OK
 	return 0;
-}
-
-void ShipsView::Loop(double dt) {
-
-}
-
-void ShipsView::Render() {
-
 }
 
 int ShipsView::GetWidth() {
@@ -101,3 +96,8 @@ int ShipsView::GetWidth() {
 int ShipsView::GetHeight() {
 	return this->m_height;
 }
+
+GLuint ShipsView::GetGraphicsProg() {
+	return this->m_program;
+}
+
