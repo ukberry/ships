@@ -12,9 +12,10 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-		m_surface(0), m_screenflags(0), m_fullscreen(0), m_program(0) {
+		m_surface(0), m_screenflags(0), m_fullscreen(1), m_program(0) {
 	this->m_fullscreen ? this->m_width = 1920 : this->m_width = 1024;
 	this->m_fullscreen ? this->m_height = 1080 : this->m_height = 768;
+	this->m_uniM = this->m_uniV_inv = this->m_uniM_inv = -1;
 }
 
 ShipsView::~ShipsView() {
@@ -62,23 +63,35 @@ int ShipsView::CreateView() {
 
 	m_program = create_program();
 
-	if(!m_program) {
+	if (!m_program) {
 		std::cerr << "Error: Failed to compile shaders on the graphics card\n";
 		return EXIT_FAILURE;
 	}
 
+	this->m_uniM = glGetUniformLocation(m_program, "M");
+	this->m_uniV = glGetUniformLocation(m_program, "V");
+	this->m_uniP = glGetUniformLocation(m_program, "P");
+	this->m_uniM_inv = glGetUniformLocation(m_program, "Minv");
+	this->m_uniV_inv = glGetUniformLocation(m_program, "Vinv");
+
+	if (m_uniM_inv < 0) {
+		std::cerr
+				<< "Error: Failed to obtain location of transformation matrix\n";
+		return EXIT_FAILURE;
+	}
+
 	//glClearColor(192.0f/255.0f, 0, 0, 1.0f);
-	glClearColor(1., 1., 1., 1.0f);
+	glClearColor(0., 0., 0., 1.);
 	glClearDepth(1.0f);
 
 	glEnable(GL_DEPTH_TEST);
 
-	glEnable (GL_LINE_SMOOTH);
+	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-	glHint(GL_POLYGON_SMOOTH_HINT, GL_DONT_CARE);
+	//glHint(GL_POLYGON_SMOOTH_HINT, GL_DONT_CARE);
 
 	glLineWidth(1.5f);
 
@@ -101,3 +114,32 @@ GLuint ShipsView::GetGraphicsProg() {
 	return this->m_program;
 }
 
+GLint ShipsView::GetM() {
+	if (this->m_uniM < 0)
+		throw "OpenGL program not compiled yet!";
+	return this->m_uniM;
+}
+
+GLint ShipsView::GetV() {
+	if (this->m_uniV < 0)
+		throw "OpenGL program not compiled yet!";
+	return this->m_uniV;
+}
+
+GLint ShipsView::GetP() {
+	if (this->m_uniP < 0)
+		throw "OpenGL program not compiled yet!";
+	return this->m_uniP;
+}
+
+GLint ShipsView::GetV_inv() {
+	if (this->m_uniV_inv < 0)
+			//throw "OpenGL program not compiled yet!";
+		return this->m_uniV_inv;
+}
+
+GLint ShipsView::GetM_inv() {
+	if (this->m_uniM_inv < 0)
+			throw "OpenGL program not compiled yet!";
+		return this->m_uniM_inv;
+}

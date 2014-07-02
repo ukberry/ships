@@ -5,6 +5,10 @@ GameController::GameController() :
 		m_rot(0), o_rot(0) {
 
 	ShipsView *view = ShipsController::GetInstance()->GetView();
+
+	// Call this before loading objects!
+	glUseProgram(view->GetGraphicsProg());
+
 	this->m_height = view->GetHeight();
 	this->m_width = view->GetWidth();
 
@@ -17,23 +21,19 @@ GameController::GameController() :
 	this->m_ships.push_back(new Ship(0, 0));
 	std::cout << "Player ship created\n";
 
+	this->v_ship->Upload();
+
 	this->m_cam = new Camera(0,0,200);
 
-	struct vertice {
-		GLfloat coord[2];
-		GLfloat colour[3];
-	};
 
 	struct vertice verts[] = {
-				{{-0.8,-0.8,}, {.7,0.,0.}},
-				{{0.,0.8}, {0.,1.,0.}},
-				{{0.8,-0.8},{0.,0.,.7}}
+				{{-1.,-1.,},{0.,0.},{0., 0., 1.}, {0.,0.,1.}},
+				{{1.,1.},{0.,0.},{0., 0., 1.}, {0.,1.,0.}},
+				{{1.,-1.},{0.,0.},{0., 0., 1.},{1.,0.,0.}}
 		};
 
-
-
-
-	glUseProgram(view->GetGraphicsProg());
+	glm::mat4 T = glm::mat4(1);
+	glUniformMatrix4fv(view->GetM(), 1, GL_FALSE, glm::value_ptr(T));
 
 	glGenVertexArrays(VAOCount, VAOs);
 	glGenBuffers(BufferCount, Buffers);
@@ -43,16 +43,18 @@ GameController::GameController() :
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(va_coord, 2, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,coord));
+	glVertexAttribPointer(va_normal, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,normal));
 	glVertexAttribPointer(va_colour, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,colour));
 
 	glEnableVertexAttribArray(va_coord);
+	glEnableVertexAttribArray(va_normal);
 	glEnableVertexAttribArray(va_colour);
 
 
 	struct vertice verts2[] = {
-						{{-0.8,0.8,}, {.7,0.,0.}},
-						{{0.,-0.8}, {0.,1.,0.}},
-						{{0.8,0.8},{0.,0.,.7}}
+						{{-1,1.,},{0.,0.},{0., 0., 1.}, {0.,0.,1.}},
+						{{-1.,-1.},{0.,0.},{0., 0., 1.}, {0.,1.,0.}},
+						{{1.,1.},{0.,0.},{0., 0., 1.},{1.,0.,0.}}
 				};
 
 	glBindVertexArray(VAOs[Test2]);
@@ -60,9 +62,11 @@ GameController::GameController() :
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts2), verts2, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(va_coord, 2, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,coord));
+	glVertexAttribPointer(va_normal, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,normal));
 	glVertexAttribPointer(va_colour, 3, GL_FLOAT, GL_FALSE, sizeof(struct vertice), (GLvoid*)offsetof(struct vertice,colour));
 
 	glEnableVertexAttribArray(va_coord);
+	glEnableVertexAttribArray(va_normal);
 	glEnableVertexAttribArray(va_colour);
 }
 
@@ -85,7 +89,7 @@ GameController::~GameController() {
 	std::cout << "Game Controller Freed!\n";
 }
 
-void GameController::Loop(double dt) {
+void GameController::Loop(unsigned int dt) {
 
 	// Get the key states
 	Uint8* keys = SDL_GetKeyState(NULL);
@@ -93,7 +97,7 @@ void GameController::Loop(double dt) {
 	Ship* ship = this->m_ships[0];
 
 	// If space bar pressed, set thrust to 100 percent, else set thrust to 0.
-	keys[SDLK_SPACE] ? ship->setThrust(100) : ship->setThrust(0);
+	keys[SDLK_SPACE] ? ship->setThrust(1) : ship->setThrust(0);
 
 	// If arrow keys pressed, rotate in desired direction.
 	(keys[SDLK_RIGHT] || keys[SDLK_LEFT]) ?
@@ -111,7 +115,7 @@ void GameController::Loop(double dt) {
 	static int pMouseX, pMouseY;
 	int mouseX, mouseY;
 
-	if (SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(2)) this->m_cam->RotateBy(mouseX-pMouseX,mouseY-pMouseY);
+	if (SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(2)) this->m_cam->RotateBy(mouseX-pMouseX,pMouseY-mouseY);
 
 	pMouseX = mouseX;
 	pMouseY = mouseY;
@@ -137,7 +141,7 @@ void GameController::Event(SDL_Event& evt) {
 		SDLKey key = evt.key.keysym.sym;
 		if (key == SDLK_h) {
 			this->m_ships[0]->resetPosition();
-			this->m_cam->SetRotation(-45,-50);
+			//this->m_cam->SetRotation(-45,-50);
 			}
 	}
 
@@ -146,10 +150,16 @@ void GameController::Event(SDL_Event& evt) {
 void GameController::Render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glUniformMatrix4fv(ShipsController::GetInstance()->GetView()->GetM(),
+			1,GL_FALSE,glm::value_ptr(glm::mat4(1)));
+	glUniformMatrix3fv(ShipsController::GetInstance()->GetView()->GetM_inv(),
+				1,GL_FALSE,glm::value_ptr(glm::mat3(1)));
 	for (int i = 0; i < VAOCount; i++) {
 		glBindVertexArray(VAOs[i]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
+
+	this->v_ship->Render(this->m_ships[0]);
 
 	glFlush();
 

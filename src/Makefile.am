@@ -9,7 +9,9 @@ ships_SOURCES=	gamecontroller.h \
 				ship.cpp \
 				camera.cpp \
 				shaders.h \
-				shaders.cpp
+				shaders.cpp \
+				object.h \
+				object.cpp
 				
 
 if WIN_32

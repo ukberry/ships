@@ -10,8 +10,10 @@
 
 #define SHIP_CONTROLLER_MAIN 3.14789632
 
+#include <iostream>
 #include <vector>
 
+#include <GL/glew.h>
 #include <SDL/SDL.h>
 
 class ShipsView;
@@ -30,6 +32,8 @@ private:
 
 	/**
 	 * Define the set of games states.
+	 *
+	 * I can't remember why I didn't use an enumeration here!?
 	 */
 	class State {
 	public:
@@ -77,11 +81,41 @@ public:
 
 public:
 	virtual void Event(SDL_Event& evt) {};
-	virtual void Loop(double seconds) {};
+	virtual void Loop(unsigned int seconds) {};
 	virtual void Render() {};
 
 };
 
+class ShipsView {
+private:
+	SDL_Surface *m_surface;
+	int m_screenflags;
+	bool m_fullscreen;
+	int m_width;
+	int m_height;
+
+	GLint m_program;
+	GLint m_uniM;
+	GLint m_uniV;
+	GLint m_uniP;
+	GLint m_uniV_inv;
+	GLint m_uniM_inv;
+
+public:
+	ShipsView();
+	~ShipsView();
+
+	int CreateView();
+
+	int GetWidth();
+	int GetHeight();
+	GLuint GetGraphicsProg();
+	GLint GetM();
+	GLint GetV();
+	GLint GetP();
+	GLint GetV_inv();
+	GLint GetM_inv();
+};
 
 
 

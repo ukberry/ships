@@ -96,14 +96,14 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__ships_SOURCES_DIST = gamecontroller.h ships.h shipsviews.h \
 	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
-	ship.cpp camera.cpp shaders.h shaders.cpp Ships_win32.cpp \
-	Ships.cpp
+	ship.cpp camera.cpp shaders.h shaders.cpp object.h object.cpp \
+	Ships_win32.cpp Ships.cpp
 @WIN_32_TRUE@am__objects_1 = Ships_win32.$(OBJEXT)
 @WIN_32_FALSE@am__objects_2 = Ships.$(OBJEXT)
 am_ships_OBJECTS = shipscontroller.$(OBJEXT) shipview.$(OBJEXT) \
 	views.$(OBJEXT) gamecontroller.$(OBJEXT) ship.$(OBJEXT) \
-	camera.$(OBJEXT) shaders.$(OBJEXT) $(am__objects_1) \
-	$(am__objects_2)
+	camera.$(OBJEXT) shaders.$(OBJEXT) object.$(OBJEXT) \
+	$(am__objects_1) $(am__objects_2)
 ships_OBJECTS = $(am_ships_OBJECTS)
 am__DEPENDENCIES_1 =
 ships_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -280,8 +280,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ships_SOURCES = gamecontroller.h ships.h shipsviews.h \
 	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
-	ship.cpp camera.cpp shaders.h shaders.cpp $(am__append_1) \
-	$(am__append_2)
+	ship.cpp camera.cpp shaders.h shaders.cpp object.h object.cpp \
+	$(am__append_1) $(am__append_2)
 
 #ships_INCLUDES= $(SDL_CFLAGS)
 ships_LDADD = $(LIBS)
@@ -376,6 +376,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ships_win32.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/camera.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamecontroller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/object.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shaders.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ship.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipscontroller.Po@am__quote@

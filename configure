@@ -4837,7 +4837,7 @@ fi
 if test "xno" = "x$os_win32"; then
 
 if test `uname -s` != Darwin; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lGLU" >&5
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lGLU" >&5
 $as_echo_n "checking for gluLookAt in -lGLU... " >&6; }
 if ${ac_cv_lib_GLU_gluLookAt+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -4882,7 +4882,7 @@ _ACEOF
 
 else
 
-     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lMesaGLU" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gluLookAt in -lMesaGLU" >&5
 $as_echo_n "checking for gluLookAt in -lMesaGLU... " >&6; }
 if ${ac_cv_lib_MesaGLU_gluLookAt+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -4933,7 +4933,7 @@ fi
 fi
 
 
-     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glInitNames in -lGL" >&5
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glInitNames in -lGL" >&5
 $as_echo_n "checking for glInitNames in -lGL... " >&6; }
 if ${ac_cv_lib_GL_glInitNames+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -4978,7 +4978,7 @@ _ACEOF
 
 else
 
-     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glInitNames in -lMesaGL" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glInitNames in -lMesaGL" >&5
 $as_echo_n "checking for glInitNames in -lMesaGL... " >&6; }
 if ${ac_cv_lib_MesaGL_glInitNames+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -5029,7 +5029,7 @@ fi
 fi
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lGLEW" >&5
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lGLEW" >&5
 $as_echo_n "checking for glewInit in -lGLEW... " >&6; }
 if ${ac_cv_lib_GLEW_glewInit+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -5074,7 +5074,7 @@ _ACEOF
 
 else
 
-     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lMesaGLEW" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for glewInit in -lMesaGLEW" >&5
 $as_echo_n "checking for glewInit in -lMesaGLEW... " >&6; }
 if ${ac_cv_lib_MesaGLEW_glewInit+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -5124,15 +5124,11 @@ fi
 
 fi
 
-
 fi
 
 else
 LIBS="-lopengl32 -lglu32 $LIBS"
 fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: $LIBS" >&5
-$as_echo "$as_me: $LIBS" >&6;}
 
 ac_config_files="$ac_config_files Makefile src/Makefile"
 
