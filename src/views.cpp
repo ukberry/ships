@@ -12,7 +12,7 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-		m_surface(0), m_screenflags(0), m_fullscreen(1), m_program(0) {
+		m_surface(0), m_screenflags(0), m_fullscreen(0), m_program(0) {
 	this->m_fullscreen ? this->m_width = 1920 : this->m_width = 1024;
 	this->m_fullscreen ? this->m_height = 1080 : this->m_height = 768;
 	this->m_uniM = this->m_uniV_inv = this->m_uniM_inv = -1;

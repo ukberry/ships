@@ -28,7 +28,7 @@ Camera::Camera(float x, float y, float tc = 200) :
 	this->m_V_inv = ShipsController::GetInstance()->GetView()->GetV_inv();
 
 	// Distance from camera target
-	this->m_distance = 70.0;
+	this->m_distance = 10.0; //70.0;
 
 	glm::mat4 V = glm::lookAt(
 			glm::vec3(

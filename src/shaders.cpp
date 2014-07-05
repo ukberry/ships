@@ -22,9 +22,10 @@ const char *vert_shader_main = "#version 300 es\n"
 		"vec3 normalDirection = normalize(Minv*vNormal);"
 		//"vec3 light_dir = normalize(vec3(Vinv * vec4(0.0, 0.0, 0.0, 1.0) - M * vCoord));"
 		"vec3 lightDirection = normalize(vec3(1.0,0.3,1.0));"
+		"vec3 lightDirection2 = normalize(vec3(-1.0,-1,-0.7));"
 		"gl_Position = P * V * M *vCoord;"
 		//"vColour = colour * vec4( 0.3 + vec3(1)*max(0.0,dot(lightDirection,normalDirection)), 1.0);"
-		"vColour = vec4( vec3(colour)*max(0.0,dot(normalDirection,lightDirection)), 1.0);"
+		"vColour = vec4( vec3(colour)*(max(0.0,dot(normalDirection,lightDirection))+vec3(0.3,0.1,0.3)*max(0.0,dot(normalDirection,lightDirection2))), 1.0);"
 		//"vColour = colour;"
 		"}";
 
