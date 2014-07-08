@@ -7,6 +7,7 @@
 
 #include "object.h"
 
+#include <string>
 #include <fstream>
 #include <sstream>
 
@@ -185,7 +186,22 @@ int ObjectView::Upload() {
 
 int ObjectView::LoadObject(const char* filename) {
 
-	std::ifstream file(filename, std::ios::in);
+	/*TODO(sam)- Create a more elegant storage for shipper objects!
+	 * Current method is not acceptable!
+	 */
+
+	std::string data_location(TOPDIR);
+	data_location += "/data/";
+	data_location += filename;
+	std::ifstream file(data_location.c_str(), std::ios::in);
+
+	data_location = DATADIR;
+	data_location += "/ships/objects/";
+	data_location += filename;
+
+	std::cout << "Trying location: " << data_location << "\n";
+
+	if(!file) file.open(data_location.c_str(), std::ios::in);
 
 	if (!file) {
 		std::cerr << "Cannot load object file " << filename << ".\n";
@@ -240,6 +256,8 @@ void ObjectView::SetM(glm::mat4 M) {
 
 	glm::mat3 M_invT = glm::transpose(glm::inverse(glm::mat3(M)));
 	glUniformMatrix3fv(this->m_M_inv, 1, GL_FALSE, glm::value_ptr(M_invT));
+
+	//glUniform1f(ShipsController::GetInstance()->GetView()->GetisSprite(),1);
 }
 
 void ObjectView::Render(ObjectModel* model) {
@@ -250,7 +268,7 @@ void ObjectView::Render(ObjectModel* model) {
 }
 
 ObjectModel::ObjectModel() :
-		phi(0), theta(0), yaw(0) {
+		phi(0), theta(0), yaw(0), scale(1) {
 
 }
 
@@ -259,6 +277,7 @@ glm::mat4 ObjectModel::GetTransform() {
 	M = glm::rotate(M, this->phi, glm::vec3(0, 0, 1));
 	M = glm::rotate(M, this->theta, glm::vec3(1, 0, 0));
 	M = glm::rotate(M, this->yaw, glm::vec3(0, 1, 0));
+	M = glm::scale(M, glm::vec3(scale));
 
 	return M;
 }

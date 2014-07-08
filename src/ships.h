@@ -100,6 +100,8 @@ private:
 	GLint m_uniP;
 	GLint m_uniV_inv;
 	GLint m_uniM_inv;
+	GLint m_uniisSprite;
+	GLint m_uniVSprite;
 
 public:
 	ShipsView();
@@ -115,6 +117,8 @@ public:
 	GLint GetP();
 	GLint GetV_inv();
 	GLint GetM_inv();
+	GLint GetisSprite();
+	GLint GetVSprite();
 };
 
 

@@ -66,6 +66,6 @@ else
 LIBS="-lopengl32 -lglu32 $LIBS"
 fi
 
-AC_CONFIG_FILES(Makefile src/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile data/Makefile)
 AC_OUTPUT
 

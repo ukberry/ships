@@ -12,7 +12,7 @@
 #include <math.h>
 
 ShipsView::ShipsView() :
-		m_surface(0), m_screenflags(0), m_fullscreen(0), m_program(0) {
+		m_surface(0), m_screenflags(0), m_fullscreen(1), m_program(0) {
 	this->m_fullscreen ? this->m_width = 1920 : this->m_width = 1024;
 	this->m_fullscreen ? this->m_height = 1080 : this->m_height = 768;
 	this->m_uniM = this->m_uniV_inv = this->m_uniM_inv = -1;
@@ -73,6 +73,8 @@ int ShipsView::CreateView() {
 	this->m_uniP = glGetUniformLocation(m_program, "P");
 	this->m_uniM_inv = glGetUniformLocation(m_program, "Minv");
 	this->m_uniV_inv = glGetUniformLocation(m_program, "Vinv");
+	this->m_uniisSprite = glGetUniformLocation(m_program, "isSprite");
+	this->m_uniVSprite = glGetUniformLocation(m_program, "VSprite");
 
 	if (m_uniM_inv < 0) {
 		std::cerr
@@ -80,9 +82,15 @@ int ShipsView::CreateView() {
 		return EXIT_FAILURE;
 	}
 
+	float gWidth, gHeight;
+	gWidth = m_width;
+	gHeight = m_height;
+
 	//glClearColor(192.0f/255.0f, 0, 0, 1.0f);
 	glClearColor(0., 0., 0., 1.);
 	glClearDepth(1.0f);
+
+	glUseProgram(m_program);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -97,6 +105,11 @@ int ShipsView::CreateView() {
 
 	// Set the window's title.
 	SDL_WM_SetCaption("Ships <alpha> - Sam Berry", 0);
+
+	glm::mat4 VSprite = glm::ortho(-gWidth / 2, gWidth / 2, -gHeight / 2,
+			gHeight / 2, -10.0f, 10.0f);
+	glUniformMatrix4fv(ShipsController::GetInstance()->GetView()->GetVSprite(),
+			1, GL_FALSE, glm::value_ptr(VSprite));
 
 	// Return OK
 	return 0;
@@ -134,12 +147,22 @@ GLint ShipsView::GetP() {
 
 GLint ShipsView::GetV_inv() {
 	if (this->m_uniV_inv < 0)
-			//throw "OpenGL program not compiled yet!";
+		//throw "OpenGL program not compiled yet!";
 		return this->m_uniV_inv;
 }
 
 GLint ShipsView::GetM_inv() {
 	if (this->m_uniM_inv < 0)
-			throw "OpenGL program not compiled yet!";
-		return this->m_uniM_inv;
+		throw "OpenGL program not compiled yet!";
+	return this->m_uniM_inv;
+}
+
+GLint ShipsView::GetisSprite() {
+	return this->m_uniisSprite;
+}
+
+GLint ShipsView::GetVSprite() {
+	if (this->m_uniVSprite < 0)
+		throw "OpenGL program not compiled yet!";
+	return this->m_uniVSprite;
 }

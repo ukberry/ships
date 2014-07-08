@@ -12,7 +12,10 @@ ships_SOURCES=	gamecontroller.h \
 				shaders.cpp \
 				object.h \
 				object.cpp
-				
+
+ships_CPPFLAGS =-DDATADIR=\"$(datadir)\" \
+				-DTOPDIR=\"$(top_srcdir)\" \
+				-I$(srcdir)/data
 
 if WIN_32
 ships_SOURCES += Ships_win32.cpp

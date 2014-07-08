@@ -4,7 +4,7 @@
 
 ShipView::ShipView() {
 	std::cout << "Calling ShipView constructor\n";
-	this->LoadObject("data/shipper.obj");
+	this->LoadObject("shipper.obj");
 
 }
 

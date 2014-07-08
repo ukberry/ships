@@ -6,9 +6,6 @@ GameController::GameController() :
 
 	ShipsView *view = ShipsController::GetInstance()->GetView();
 
-	// Call this before loading objects!
-	glUseProgram(view->GetGraphicsProg());
-
 	this->m_height = view->GetHeight();
 	this->m_width = view->GetWidth();
 
@@ -27,11 +24,11 @@ GameController::GameController() :
 
 
 	float width, height;
-	width = height = 100.0;
+	width = height = 500.0;
 	struct vertice verts[] = {
-				{{-width,-height},{0.,0.},{0., 0., 1.}, {0.,0.,1.}},
-				{{width,height},{0.,0.},{0., 0., 1.}, {0.,1.,0.}},
-				{{width,-height},{0.,0.},{0., 0., 1.},{1.,0.,0.}}
+				{{-width,-height},{0.,0.},{0., 0., 1.}, {0.,1.,0.}},
+				{{width,height},{0.,0.},{0., 0., 1.}, {1.,0.,0.}},
+				{{width,-height},{0.,0.},{0., 0., 1.},{0.,0.,1.}}
 		};
 
 	glm::mat4 T = glm::mat4(1);
@@ -99,7 +96,7 @@ void GameController::Loop(unsigned int dt) {
 	Ship* ship = this->m_ships[0];
 
 	// If space bar pressed, set thrust to 100 percent, else set thrust to 0.
-	keys[SDLK_SPACE] ? ship->setThrust(1) : ship->setThrust(0);
+	keys[SDLK_SPACE] ? ship->setThrust(100) : ship->setThrust(0);
 
 	// If arrow keys pressed, rotate in desired direction.
 	(keys[SDLK_RIGHT] || keys[SDLK_LEFT]) ?
@@ -117,7 +114,9 @@ void GameController::Loop(unsigned int dt) {
 	static int pMouseX, pMouseY;
 	int mouseX, mouseY;
 
-	if (SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(2)) this->m_cam->RotateBy(mouseX-pMouseX,pMouseY-mouseY);
+	if (SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(2)) {
+		this->m_cam->RotateBy(mouseX-pMouseX,pMouseY-mouseY);
+	}
 
 	pMouseX = mouseX;
 	pMouseY = mouseY;
@@ -156,12 +155,19 @@ void GameController::Render() {
 			1,GL_FALSE,glm::value_ptr(glm::mat4(1)));
 	glUniformMatrix3fv(ShipsController::GetInstance()->GetView()->GetM_inv(),
 				1,GL_FALSE,glm::value_ptr(glm::mat3(1)));
+
+	glUniform1f(ShipsController::GetInstance()->GetView()->GetisSprite(),0);
 	for (int i = 0; i < VAOCount; i++) {
 		glBindVertexArray(VAOs[i]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
+
+
 	this->v_ship->Render(this->m_ships[0]);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	// Now draw the sprites
 
 	glFlush();
 

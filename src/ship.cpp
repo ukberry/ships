@@ -36,6 +36,8 @@ Ship::Ship(float x, float y) {
 
 	this->m_physics = 0;
 	this->m_phystime = 0;
+
+	this->scale = 15;
 }
 
 void Ship::Loop(unsigned int dt) {
@@ -72,14 +74,17 @@ void Ship::Loop(unsigned int dt) {
 	this->m_y += this->m_vy*dt;
 
 	this->m_z += this->m_vz*dt;
-	this->yaw = 0.2*sinf(2.*M_PI * 0.4 * this->m_time/1000.);
 
-	if(m_z <= 0) {
-		this->m_z = 0;
+
+	float ground = 0.2*scale;
+	if(m_z <= ground) {
+		this->m_z = ground;
+		this->yaw = 0.0;
 		this->setPhysics(1);
 	}
 	else {
 		this->setPhysics(0);
+		this->yaw = 0.2*sinf(2.*M_PI * 0.4 * this->m_time/1000.);
 
 	}
 }

@@ -15,7 +15,7 @@
  *	@param tc	The time constant of the camera movement.
  */
 Camera::Camera(float x, float y, float tc = 200) :
-		m_sensitivity(0.2), phi(0), theta(-50) {
+		m_sensitivity(0.2), phi(0), theta(50) {
 	this->m_x = this->m_xf = x;
 	this->m_y = this->m_yf = y;
 	this->m_tc = tc;
@@ -28,7 +28,7 @@ Camera::Camera(float x, float y, float tc = 200) :
 	this->m_V_inv = ShipsController::GetInstance()->GetView()->GetV_inv();
 
 	// Distance from camera target
-	this->m_distance = 10.0; //70.0;
+	this->m_distance = 2000.0; //70.0;
 
 	glm::mat4 V = glm::lookAt(
 			glm::vec3(
@@ -39,13 +39,16 @@ Camera::Camera(float x, float y, float tc = 200) :
 					m_distance * cosf(glm::radians(this->theta))),
 			glm::vec3(0, 0, 0), glm::vec3(0, 0, 1));
 
-	glm::mat4 P = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f,
+	glm::mat4 P = glm::perspective(glm::radians(20.0f), 1920.0f / 1080.0f, 1000.f,
 			10000.0f);
+
 	glUniformMatrix4fv(this->m_V, 1, GL_FALSE, glm::value_ptr(V));
 	glUniformMatrix4fv(this->m_P, 1, GL_FALSE, glm::value_ptr(P));
 
 	glm::mat4 V_inv = glm::inverse(V);
 	glUniformMatrix4fv(this->m_V_inv, 1, GL_FALSE, glm::value_ptr(V_inv));
+
+	//glDepthRange(-1,1.);
 }
 
 /**
@@ -111,4 +114,5 @@ void Camera::SetRotation(float phi, float theta) {
  */
 void Camera::Render() {
 	// Cameras are no longer rendered!
+	// Cameras just update the View and projection matrices on the graphics card
 }

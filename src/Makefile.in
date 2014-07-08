@@ -98,12 +98,13 @@ am__ships_SOURCES_DIST = gamecontroller.h ships.h shipsviews.h \
 	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
 	ship.cpp camera.cpp shaders.h shaders.cpp object.h object.cpp \
 	Ships_win32.cpp Ships.cpp
-@WIN_32_TRUE@am__objects_1 = Ships_win32.$(OBJEXT)
-@WIN_32_FALSE@am__objects_2 = Ships.$(OBJEXT)
-am_ships_OBJECTS = shipscontroller.$(OBJEXT) shipview.$(OBJEXT) \
-	views.$(OBJEXT) gamecontroller.$(OBJEXT) ship.$(OBJEXT) \
-	camera.$(OBJEXT) shaders.$(OBJEXT) object.$(OBJEXT) \
-	$(am__objects_1) $(am__objects_2)
+@WIN_32_TRUE@am__objects_1 = ships-Ships_win32.$(OBJEXT)
+@WIN_32_FALSE@am__objects_2 = ships-Ships.$(OBJEXT)
+am_ships_OBJECTS = ships-shipscontroller.$(OBJEXT) \
+	ships-shipview.$(OBJEXT) ships-views.$(OBJEXT) \
+	ships-gamecontroller.$(OBJEXT) ships-ship.$(OBJEXT) \
+	ships-camera.$(OBJEXT) ships-shaders.$(OBJEXT) \
+	ships-object.$(OBJEXT) $(am__objects_1) $(am__objects_2)
 ships_OBJECTS = $(am_ships_OBJECTS)
 am__DEPENDENCIES_1 =
 ships_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -123,6 +124,10 @@ DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/conf/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 AM_V_CXX = $(am__v_CXX_@AM_V@)
@@ -282,6 +287,10 @@ ships_SOURCES = gamecontroller.h ships.h shipsviews.h \
 	shipscontroller.cpp shipview.cpp views.cpp gamecontroller.cpp \
 	ship.cpp camera.cpp shaders.h shaders.cpp object.h object.cpp \
 	$(am__append_1) $(am__append_2)
+ships_CPPFLAGS = -DDATADIR=\"$(datadir)\" \
+				-DTOPDIR=\"$(top_srcdir)\" \
+				-I$(srcdir)/data
+
 
 #ships_INCLUDES= $(SDL_CFLAGS)
 ships_LDADD = $(LIBS)
@@ -372,16 +381,16 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ships.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ships_win32.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/camera.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamecontroller.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/object.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shaders.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ship.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipscontroller.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shipview.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/views.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-Ships.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-Ships_win32.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-camera.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-gamecontroller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-object.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-shaders.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-ship.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-shipscontroller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-shipview.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ships-views.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -396,6 +405,146 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+ships-shipscontroller.o: shipscontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shipscontroller.o -MD -MP -MF $(DEPDIR)/ships-shipscontroller.Tpo -c -o ships-shipscontroller.o `test -f 'shipscontroller.cpp' || echo '$(srcdir)/'`shipscontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shipscontroller.Tpo $(DEPDIR)/ships-shipscontroller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shipscontroller.cpp' object='ships-shipscontroller.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shipscontroller.o `test -f 'shipscontroller.cpp' || echo '$(srcdir)/'`shipscontroller.cpp
+
+ships-shipscontroller.obj: shipscontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shipscontroller.obj -MD -MP -MF $(DEPDIR)/ships-shipscontroller.Tpo -c -o ships-shipscontroller.obj `if test -f 'shipscontroller.cpp'; then $(CYGPATH_W) 'shipscontroller.cpp'; else $(CYGPATH_W) '$(srcdir)/shipscontroller.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shipscontroller.Tpo $(DEPDIR)/ships-shipscontroller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shipscontroller.cpp' object='ships-shipscontroller.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shipscontroller.obj `if test -f 'shipscontroller.cpp'; then $(CYGPATH_W) 'shipscontroller.cpp'; else $(CYGPATH_W) '$(srcdir)/shipscontroller.cpp'; fi`
+
+ships-shipview.o: shipview.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shipview.o -MD -MP -MF $(DEPDIR)/ships-shipview.Tpo -c -o ships-shipview.o `test -f 'shipview.cpp' || echo '$(srcdir)/'`shipview.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shipview.Tpo $(DEPDIR)/ships-shipview.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shipview.cpp' object='ships-shipview.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shipview.o `test -f 'shipview.cpp' || echo '$(srcdir)/'`shipview.cpp
+
+ships-shipview.obj: shipview.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shipview.obj -MD -MP -MF $(DEPDIR)/ships-shipview.Tpo -c -o ships-shipview.obj `if test -f 'shipview.cpp'; then $(CYGPATH_W) 'shipview.cpp'; else $(CYGPATH_W) '$(srcdir)/shipview.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shipview.Tpo $(DEPDIR)/ships-shipview.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shipview.cpp' object='ships-shipview.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shipview.obj `if test -f 'shipview.cpp'; then $(CYGPATH_W) 'shipview.cpp'; else $(CYGPATH_W) '$(srcdir)/shipview.cpp'; fi`
+
+ships-views.o: views.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-views.o -MD -MP -MF $(DEPDIR)/ships-views.Tpo -c -o ships-views.o `test -f 'views.cpp' || echo '$(srcdir)/'`views.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-views.Tpo $(DEPDIR)/ships-views.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='views.cpp' object='ships-views.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-views.o `test -f 'views.cpp' || echo '$(srcdir)/'`views.cpp
+
+ships-views.obj: views.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-views.obj -MD -MP -MF $(DEPDIR)/ships-views.Tpo -c -o ships-views.obj `if test -f 'views.cpp'; then $(CYGPATH_W) 'views.cpp'; else $(CYGPATH_W) '$(srcdir)/views.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-views.Tpo $(DEPDIR)/ships-views.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='views.cpp' object='ships-views.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-views.obj `if test -f 'views.cpp'; then $(CYGPATH_W) 'views.cpp'; else $(CYGPATH_W) '$(srcdir)/views.cpp'; fi`
+
+ships-gamecontroller.o: gamecontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-gamecontroller.o -MD -MP -MF $(DEPDIR)/ships-gamecontroller.Tpo -c -o ships-gamecontroller.o `test -f 'gamecontroller.cpp' || echo '$(srcdir)/'`gamecontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-gamecontroller.Tpo $(DEPDIR)/ships-gamecontroller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='gamecontroller.cpp' object='ships-gamecontroller.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-gamecontroller.o `test -f 'gamecontroller.cpp' || echo '$(srcdir)/'`gamecontroller.cpp
+
+ships-gamecontroller.obj: gamecontroller.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-gamecontroller.obj -MD -MP -MF $(DEPDIR)/ships-gamecontroller.Tpo -c -o ships-gamecontroller.obj `if test -f 'gamecontroller.cpp'; then $(CYGPATH_W) 'gamecontroller.cpp'; else $(CYGPATH_W) '$(srcdir)/gamecontroller.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-gamecontroller.Tpo $(DEPDIR)/ships-gamecontroller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='gamecontroller.cpp' object='ships-gamecontroller.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-gamecontroller.obj `if test -f 'gamecontroller.cpp'; then $(CYGPATH_W) 'gamecontroller.cpp'; else $(CYGPATH_W) '$(srcdir)/gamecontroller.cpp'; fi`
+
+ships-ship.o: ship.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-ship.o -MD -MP -MF $(DEPDIR)/ships-ship.Tpo -c -o ships-ship.o `test -f 'ship.cpp' || echo '$(srcdir)/'`ship.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-ship.Tpo $(DEPDIR)/ships-ship.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ship.cpp' object='ships-ship.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-ship.o `test -f 'ship.cpp' || echo '$(srcdir)/'`ship.cpp
+
+ships-ship.obj: ship.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-ship.obj -MD -MP -MF $(DEPDIR)/ships-ship.Tpo -c -o ships-ship.obj `if test -f 'ship.cpp'; then $(CYGPATH_W) 'ship.cpp'; else $(CYGPATH_W) '$(srcdir)/ship.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-ship.Tpo $(DEPDIR)/ships-ship.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ship.cpp' object='ships-ship.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-ship.obj `if test -f 'ship.cpp'; then $(CYGPATH_W) 'ship.cpp'; else $(CYGPATH_W) '$(srcdir)/ship.cpp'; fi`
+
+ships-camera.o: camera.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-camera.o -MD -MP -MF $(DEPDIR)/ships-camera.Tpo -c -o ships-camera.o `test -f 'camera.cpp' || echo '$(srcdir)/'`camera.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-camera.Tpo $(DEPDIR)/ships-camera.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='camera.cpp' object='ships-camera.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-camera.o `test -f 'camera.cpp' || echo '$(srcdir)/'`camera.cpp
+
+ships-camera.obj: camera.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-camera.obj -MD -MP -MF $(DEPDIR)/ships-camera.Tpo -c -o ships-camera.obj `if test -f 'camera.cpp'; then $(CYGPATH_W) 'camera.cpp'; else $(CYGPATH_W) '$(srcdir)/camera.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-camera.Tpo $(DEPDIR)/ships-camera.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='camera.cpp' object='ships-camera.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-camera.obj `if test -f 'camera.cpp'; then $(CYGPATH_W) 'camera.cpp'; else $(CYGPATH_W) '$(srcdir)/camera.cpp'; fi`
+
+ships-shaders.o: shaders.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shaders.o -MD -MP -MF $(DEPDIR)/ships-shaders.Tpo -c -o ships-shaders.o `test -f 'shaders.cpp' || echo '$(srcdir)/'`shaders.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shaders.Tpo $(DEPDIR)/ships-shaders.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shaders.cpp' object='ships-shaders.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shaders.o `test -f 'shaders.cpp' || echo '$(srcdir)/'`shaders.cpp
+
+ships-shaders.obj: shaders.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-shaders.obj -MD -MP -MF $(DEPDIR)/ships-shaders.Tpo -c -o ships-shaders.obj `if test -f 'shaders.cpp'; then $(CYGPATH_W) 'shaders.cpp'; else $(CYGPATH_W) '$(srcdir)/shaders.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-shaders.Tpo $(DEPDIR)/ships-shaders.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shaders.cpp' object='ships-shaders.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-shaders.obj `if test -f 'shaders.cpp'; then $(CYGPATH_W) 'shaders.cpp'; else $(CYGPATH_W) '$(srcdir)/shaders.cpp'; fi`
+
+ships-object.o: object.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-object.o -MD -MP -MF $(DEPDIR)/ships-object.Tpo -c -o ships-object.o `test -f 'object.cpp' || echo '$(srcdir)/'`object.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-object.Tpo $(DEPDIR)/ships-object.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='object.cpp' object='ships-object.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-object.o `test -f 'object.cpp' || echo '$(srcdir)/'`object.cpp
+
+ships-object.obj: object.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-object.obj -MD -MP -MF $(DEPDIR)/ships-object.Tpo -c -o ships-object.obj `if test -f 'object.cpp'; then $(CYGPATH_W) 'object.cpp'; else $(CYGPATH_W) '$(srcdir)/object.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-object.Tpo $(DEPDIR)/ships-object.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='object.cpp' object='ships-object.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-object.obj `if test -f 'object.cpp'; then $(CYGPATH_W) 'object.cpp'; else $(CYGPATH_W) '$(srcdir)/object.cpp'; fi`
+
+ships-Ships_win32.o: Ships_win32.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-Ships_win32.o -MD -MP -MF $(DEPDIR)/ships-Ships_win32.Tpo -c -o ships-Ships_win32.o `test -f 'Ships_win32.cpp' || echo '$(srcdir)/'`Ships_win32.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-Ships_win32.Tpo $(DEPDIR)/ships-Ships_win32.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Ships_win32.cpp' object='ships-Ships_win32.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-Ships_win32.o `test -f 'Ships_win32.cpp' || echo '$(srcdir)/'`Ships_win32.cpp
+
+ships-Ships_win32.obj: Ships_win32.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-Ships_win32.obj -MD -MP -MF $(DEPDIR)/ships-Ships_win32.Tpo -c -o ships-Ships_win32.obj `if test -f 'Ships_win32.cpp'; then $(CYGPATH_W) 'Ships_win32.cpp'; else $(CYGPATH_W) '$(srcdir)/Ships_win32.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-Ships_win32.Tpo $(DEPDIR)/ships-Ships_win32.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Ships_win32.cpp' object='ships-Ships_win32.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-Ships_win32.obj `if test -f 'Ships_win32.cpp'; then $(CYGPATH_W) 'Ships_win32.cpp'; else $(CYGPATH_W) '$(srcdir)/Ships_win32.cpp'; fi`
+
+ships-Ships.o: Ships.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-Ships.o -MD -MP -MF $(DEPDIR)/ships-Ships.Tpo -c -o ships-Ships.o `test -f 'Ships.cpp' || echo '$(srcdir)/'`Ships.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-Ships.Tpo $(DEPDIR)/ships-Ships.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Ships.cpp' object='ships-Ships.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-Ships.o `test -f 'Ships.cpp' || echo '$(srcdir)/'`Ships.cpp
+
+ships-Ships.obj: Ships.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ships-Ships.obj -MD -MP -MF $(DEPDIR)/ships-Ships.Tpo -c -o ships-Ships.obj `if test -f 'Ships.cpp'; then $(CYGPATH_W) 'Ships.cpp'; else $(CYGPATH_W) '$(srcdir)/Ships.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ships-Ships.Tpo $(DEPDIR)/ships-Ships.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Ships.cpp' object='ships-Ships.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ships_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ships-Ships.obj `if test -f 'Ships.cpp'; then $(CYGPATH_W) 'Ships.cpp'; else $(CYGPATH_W) '$(srcdir)/Ships.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique

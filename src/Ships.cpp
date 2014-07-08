@@ -10,6 +10,10 @@
 
 #include "ships.h"
 
+#ifndef DATADIR
+#error "No data directory passed to compiler!"
+#endif
+
 /*
  * All we need to do here is get a ShipsController class and run it!
  */

@@ -26,6 +26,7 @@ class ObjectModel {
 protected:
 	float m_x, m_y, m_z;
 	float phi, theta, yaw;
+	float scale;
 
 public:
 	ObjectModel();
