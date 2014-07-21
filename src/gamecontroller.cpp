@@ -145,7 +145,6 @@ void GameController::Event(SDL_Event& evt) {
 			//this->m_cam->SetRotation(-45,-50);
 			}
 	}
-
 }
 
 void GameController::Render() {

@@ -28,7 +28,7 @@ Camera::Camera(float x, float y, float tc = 200) :
 	this->m_V_inv = ShipsController::GetInstance()->GetView()->GetV_inv();
 
 	// Distance from camera target
-	this->m_distance = 2000.0; //70.0;
+	this->m_distance = 1000.0; //70.0;
 
 	glm::mat4 V = glm::lookAt(
 			glm::vec3(
@@ -39,7 +39,13 @@ Camera::Camera(float x, float y, float tc = 200) :
 					m_distance * cosf(glm::radians(this->theta))),
 			glm::vec3(0, 0, 0), glm::vec3(0, 0, 1));
 
-	glm::mat4 P = glm::perspective(glm::radians(20.0f), 1920.0f / 1080.0f, 1000.f,
+	ShipsView *view = ShipsController::GetInstance()->GetView();
+	float aspect =  (float)view->GetWidth() / view->GetHeight();
+
+	std::cout << "Aspect ratio of " << view->GetWidth() << "/" << view->GetHeight()
+			<< " used (" << aspect << ").\n";
+
+	glm::mat4 P = glm::perspective(glm::radians(30.0f), aspect, 100.f,
 			10000.0f);
 
 	glUniformMatrix4fv(this->m_V, 1, GL_FALSE, glm::value_ptr(V));

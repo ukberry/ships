@@ -13,9 +13,13 @@ ships_SOURCES=	gamecontroller.h \
 				object.h \
 				object.cpp
 
-ships_CPPFLAGS =-DDATADIR=\"$(datadir)\" \
-				-DTOPDIR=\"$(top_srcdir)\" \
+ships_CXXFLAGS =-DDATADIR=\"$(datadir)\" \
+				-DTOPDIR=\"$(srcdir)\" \
 				-I$(srcdir)/data
+			
+			
+# While debugging, turn optimisation off	
+CXXFLAGS = -g -O0
 
 if WIN_32
 ships_SOURCES += Ships_win32.cpp

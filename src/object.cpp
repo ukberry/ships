@@ -19,14 +19,16 @@ face ParseObjLine(std::string input) {
 
 	using namespace std;
 
-	face theFace( { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
+	face theFace;
+	memset(&theFace,0,sizeof(face));
 
 	istringstream stream(input);
+
+	stream >> std::noskipws;
 
 	char next;
 	int index = 0;
 	int block = 0;
-	bool numeric_prev = false;
 
 	while (stream.tellg() >= 0) {
 
@@ -35,7 +37,10 @@ face ParseObjLine(std::string input) {
 		switch (next) {
 		case '/':
 			index++;
-			numeric_prev = false;
+			break;
+		case ' ':
+			block++;
+			index = 0;
 			break;
 		default:
 			if (!isdigit(next)) {
@@ -44,29 +49,15 @@ face ParseObjLine(std::string input) {
 				cerr << "Whoops - expected an index to vertice attribute!\n";
 				return theFace;
 			}
-			if (numeric_prev) {
-				/*
-				 * If the previous value was numeric, then we haven't seen a
-				 * separator, it would've been a space. So we have moved to the
-				 * next block; set the index to zero and increment the block
-				 * index.
-				 */
-				block++;
-				index = 0;
-			}
 
 			// Set the pointer back one unit and read number into the struct.
 			stream.seekg(-1, ios_base::cur);
-
-			// index - whether the value is a vCoord, vTexCoord, or vNormal
-			// block - the x, y, or z coefficient.
 
 			/*
 			 * Since the struct is a structure with 9 unsigned shorts, reference
 			 * by address.
 			 */
 			stream >> *((unsigned short*) &theFace + index * 3 + block);
-			numeric_prev = true;
 		}
 	}
 
@@ -132,8 +123,6 @@ int ObjectView::Upload() {
 				temp.normal[1] = this->m_normals[curr.normIndex[i]].y;
 				temp.normal[2] = this->m_normals[curr.normIndex[i]].z;
 
-				std::cout << "Normal vector found!: " << temp.normal[0] << ", "
-						<< temp.normal[1] << ", " << temp.normal[2] << "\n";
 			} else {
 				temp.normal[0] = temp.normal[1] = temp.normal[2] = 0;
 			}
@@ -143,7 +132,6 @@ int ObjectView::Upload() {
 			temp.colour[2] = 1.;
 
 			this->m_buffer.push_back(temp);
-			std::cout << "Iteration " << i << ": " << curr.vIndex[i] << "\n";
 		}
 	}
 
@@ -186,14 +174,12 @@ int ObjectView::Upload() {
 
 int ObjectView::LoadObject(const char* filename) {
 
-	/*TODO(sam)- Create a more elegant storage for shipper objects!
-	 * Current method is not acceptable!
-	 */
-
 	std::string data_location(TOPDIR);
 	data_location += "/data/";
 	data_location += filename;
 	std::ifstream file(data_location.c_str(), std::ios::in);
+
+	std::cout << "Trying location: " << data_location << "\n";
 
 	data_location = DATADIR;
 	data_location += "/ships/objects/";

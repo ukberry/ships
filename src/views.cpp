@@ -1,9 +1,10 @@
-/*
- * views.cpp
- *
- *  Created on: 15 Jan 2014
- *      Author: sam
- */
+//============================================================================
+// Name        : views.cpp
+// Author      : Sam Berry <berry.sam@gmail.com>
+// Version     :
+// Copyright   : © Sam Berry 2014. All Rights Reserved.
+// Description : ShipsView class source file.
+//============================================================================
 
 #include "shipsviews.h"
 
@@ -11,13 +12,24 @@
 
 #include <math.h>
 
+/**
+ * The constructor function for the program's main view class.
+ *
+ * @author Sam Berry
+ */
 ShipsView::ShipsView() :
-		m_surface(0), m_screenflags(0), m_fullscreen(1), m_program(0) {
+		m_surface(0), m_screenflags(0), m_fullscreen(0), m_program(0), m_uniisSprite(
+				false), m_uniV(0), m_uniP(0), m_uniM(0), m_uniVSprite(0) {
 	this->m_fullscreen ? this->m_width = 1920 : this->m_width = 1024;
 	this->m_fullscreen ? this->m_height = 1080 : this->m_height = 768;
 	this->m_uniM = this->m_uniV_inv = this->m_uniM_inv = -1;
 }
 
+/**
+ * The destructor function for ShipsView class.
+ *
+ * @author Sam Berry
+ */
 ShipsView::~ShipsView() {
 
 	this->m_surface = SDL_SetVideoMode(0, 0, 0, this->m_screenflags);
@@ -31,6 +43,11 @@ ShipsView::~ShipsView() {
 
 }
 
+/**
+ * Creates the window and compiles the GLSL shaders on the graphics card.
+ *
+ * @returns int Returns 0 if successful.
+ */
 int ShipsView::CreateView() {
 
 	// Initialise SDL
@@ -52,7 +69,7 @@ int ShipsView::CreateView() {
 		this->m_surface = SDL_SetVideoMode(0, 0, 0,
 				this->m_screenflags | SDL_FULLSCREEN);
 
-	SDL_ShowCursor(0);
+	SDL_ShowCursor(1);
 
 	/* Extension wrangler initialising */
 	GLenum glew_status = glewInit();
@@ -68,6 +85,7 @@ int ShipsView::CreateView() {
 		return EXIT_FAILURE;
 	}
 
+	// Obtain references to the shaders' uniform variables
 	this->m_uniM = glGetUniformLocation(m_program, "M");
 	this->m_uniV = glGetUniformLocation(m_program, "V");
 	this->m_uniP = glGetUniformLocation(m_program, "P");
