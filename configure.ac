@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.68)
-AC_INIT([ships], 0.1)
+AC_INIT([ships], 0.2)
 
 AC_CONFIG_AUX_DIR(conf)
 
