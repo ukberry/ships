@@ -10,7 +10,6 @@
 
 #include "ships.h"
 
-#include <windows.h>
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int iShow) {
 	return ShipsController::GetInstance()->Run();
 }

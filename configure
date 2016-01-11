@@ -4692,6 +4692,7 @@ case "$host" in
 	*-*-mingw*)
 		CFLAGS="$CFLAGS -include windows.h -mwindows"
 		CXXFLAGS="$CXXFLAGS -include windows.h -mwindows"
+		LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 		os_win32=yes
 		;;
 	*)
@@ -5127,7 +5128,7 @@ fi
 fi
 
 else
-LIBS="-lopengl32 -lglu32 $LIBS"
+LIBS="-lglew32 -lopengl32 -lglu32 $LIBS"
 fi
 
 ac_config_files="$ac_config_files Makefile src/Makefile data/Makefile"

@@ -174,14 +174,14 @@ int ObjectView::Upload() {
 
 int ObjectView::LoadObject(const char* filename) {
 
-	std::string data_location(TOPDIR);
+	std::string data_location(RESTOPDIR);
 	data_location += "/data/";
 	data_location += filename;
 	std::ifstream file(data_location.c_str(), std::ios::in);
 
 	std::cout << "Trying location: " << data_location << "\n";
 
-	data_location = DATADIR;
+	data_location = RESDATADIR;
 	data_location += "/ships/objects/";
 	data_location += filename;
 

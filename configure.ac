@@ -22,6 +22,7 @@ case "$host" in
 	*-*-mingw*)
 		CFLAGS="$CFLAGS -include windows.h -mwindows"
 		CXXFLAGS="$CXXFLAGS -include windows.h -mwindows"
+		LDFLAGS="$LDFLAGS -static-libgcc -static-libstdc++"
 		os_win32=yes
 		;;
 	*) 
@@ -53,19 +54,19 @@ dnl Check for GLU (Original or Mesa)
 
     AC_CHECK_LIB([GL], [glInitNames],,[
         AC_CHECK_LIB(MesaGL,glInitNames,,
-            [echo "OpenGL is mandatory";exit 1]])
+            [echo "OpenGL is mandatory";exit 1])]
     )
 
     AC_CHECK_LIB([GLEW], [glewInit],,[
         AC_CHECK_LIB(MesaGLEW,glewInit,,
-            [echo "GLEW is mandatory";exit 1]])
+            [echo "GLEW is mandatory";exit 1])]
     )
 fi
 
 else
-LIBS="-lopengl32 -lglu32 $LIBS"
+LIBS="-lglew32 -lopengl32 -lglu32 $LIBS"
 fi
 
-AC_CONFIG_FILES(Makefile src/Makefile data/Makefile)
+AC_CONFIG_FILES([Makefile src/Makefile data/Makefile])
 AC_OUTPUT
 
